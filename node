@@ -1,0 +1,93 @@
+//==================================================GIẢI THÍCH CẤU TRÚC==================================================//
+
+=================================== .gitignore =====================================
+
+Đây là file dùng để liệt kê các file và thư mục mà bạn không muốn đưa vào Git (hệ thống quản lý phiên bản). 
+Ví dụ: node_modules/, file cấu hình cá nhân, v.v.
+
+=================================== App.js ==========================================
+
+Đây là file chính của ứng dụng. Tất cả các thành phần (component) và logic của giao diện sẽ được khởi chạy từ đây. 
+Mặc định, React Native sẽ tìm và chạy file App.js khi bạn bắt đầu ứng dụng.
+
+=================================== app.json ========================================
+
+File cấu hình cho ứng dụng, bao gồm tên ứng dụng, mã ứng dụng (id), và các thông tin khác. 
+File này cần thiết khi bạn xây dựng (build) ứng dụng hoặc triển khai lên kho ứng dụng.
+
+=================================== babel.config.js ==================================
+
+File này là cấu hình cho Babel, một công cụ giúp chuyển đổi mã JavaScript hiện đại sang mã JavaScript mà trình duyệt có thể hiểu. 
+Điều này đảm bảo mã của bạn hoạt động ổn định trên nhiều môi trường khác nhau.
+
+=================================== index.js =========================================
+
+File này thường là điểm bắt đầu của ứng dụng khi chạy. Nó đăng ký component gốc (thường là App) để hiển thị lên màn hình.
+
+=================================== node_modules ======================================
+
+Thư mục này chứa tất cả các package (thư viện) mà bạn đã cài đặt qua npm (Node Package Manager). 
+Đây là những thư viện cần thiết để ứng dụng hoạt động nhưng không cần phải đưa vào Git vì có thể cài lại qua npm install.
+
+=================================== package.json =======================================
+
+File này liệt kê thông tin về dự án, bao gồm các dependency (thư viện phụ thuộc) mà ứng dụng của bạn cần, 
+các scripts để chạy ứng dụng, và các thông tin khác như tên và phiên bản của dự án.
+
+=================================== package-lock.json ===================================
+
+File này ghi lại chính xác phiên bản của từng package trong node_modules khi bạn cài đặt chúng. 
+Điều này giúp đảm bảo rằng khi người khác cài đặt dự án của bạn, các phiên bản thư viện sẽ đồng bộ.
+
+=================================== components =========================================
+Chứa các thành phần UI (User Interface) độc lập, tái sử dụng được, chẳng hạn như nút, ô nhập liệu, hoặc các mục danh sách. 
+Bạn có thể sử dụng lại các thành phần này trên nhiều màn hình khác nhau.
+Ví dụ như có cái nút mà có nhiều trang thì tạo cái nút đó ở đây rồi import vào các trang khác .Giúp đỡ code lại
+
+=================================== hooks ==============================================
+Chứa các custom hooks – là các hàm JavaScript đặc biệt sử dụng trong React để quản lý logic hoặc trạng thái, 
+thường là để chia sẻ logic giữa các thành phần. Ví dụ: useFetchData hoặc useToggle.
+
+=================================== navigation =========================================
+Quản lý cấu hình cho hệ thống điều hướng (navigation) trong ứng dụng, như cấu hình cho các stack, tab hoặc drawer navigation. 
+Đây là nơi thiết lập các tuyến đường giữa các màn hình (screens) của ứng dụng.
+
+=================================== redux ===============================================
+Chứa các redux slices và các thiết lập redux khác nếu bạn sử dụng Redux để quản lý trạng thái toàn cục cho ứng dụng. 
+Các file trong này thường bao gồm reducers, actions, và store.
+=================================== screens =============================================
+Chứa các màn hình chính (screens) của ứng dụng, mỗi màn hình thường là một trang hoặc một khu vực độc lập trong ứng dụng. 
+Ví dụ: màn hình Home, Profile, Settings.
+=================================== services ===========================================
+Thư mục services chứa các chức năng liên quan đến việc giao tiếp giữa ứng dụng và các dịch vụ bên ngoài, như API, cơ sở dữ liệu, 
+hoặc bất kỳ hệ thống nào khác nằm ngoài ứng dụng. Các hàm này chịu trách nhiệm kết nối với API hoặc thực hiện các thao tác logic 
+không liên quan đến giao diện. Điều này giúp tách biệt rõ ràng giữa phần xử lý logic và phần giao diện người dùng.
+
+Ví dụ cụ thể trong services/:
+
+API Calls (Gọi API): Hàm lấy dữ liệu từ một server qua các phương thức HTTP như GET, POST, PUT, DELETE.
+Ví dụ: fetchUserData, createNewUser, deleteUser, v.v.
+
+Xử lý xác thực: Các hàm đăng nhập, đăng ký, và xử lý token xác thực (authentication tokens) để quản lý quyền truy cập.
+Ví dụ: loginUser, logoutUser, refreshToken, v.v.
+
+Giao tiếp với các dịch vụ bên ngoài: Các hàm kết nối đến dịch vụ thứ ba như Firebase, Google Maps, hoặc các dịch vụ thanh toán.
+Ví dụ: fetchMapData, sendPushNotification.
+=================================== utils ================================================
+Thư mục utils chứa các hàm tiện ích (utility functions) hoặc các biến không thay đổi (constants) mà có thể sử dụng ở nhiều nơi 
+trong ứng dụng. Đây là những hàm không thuộc về một tính năng cụ thể nào, nhưng lại giúp đơn giản hóa công việc xử lý dữ liệu 
+hoặc các phép toán cơ bản trong ứng dụng.
+
+Ví dụ cụ thể trong utils/:
+
+Hàm tiện ích xử lý chuỗi: Các hàm giúp xử lý, định dạng, hoặc chuyển đổi chuỗi.
+Ví dụ: capitalizeText, truncateText, formatPhoneNumber.
+
+Hàm tính toán: Hàm tính toán các công thức đơn giản, thường dùng cho các màn hình khác nhau.
+Ví dụ: calculateDiscount, formatCurrency.
+
+Hằng số (Constants): Các biến không thay đổi như mã màu, kích thước font, URL API, giúp dễ quản lý khi cần chỉnh sửa.
+Ví dụ: COLORS, FONT_SIZES, API_BASE_URL.
+=================================== assets ================================================
+
+Chứa các ảnh và font dùng trong ứng dụng. Đây là nơi lưu trữ tất cả các tài nguyên không phải là mã nguồn,
