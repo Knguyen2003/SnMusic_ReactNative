@@ -1,7 +1,7 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import LaunchScreen from '../screens/LaunchScreen';
-import HomeAudioListing from '../screens/HomeAudioListing';
+import NaviBottom from '../navigation/NavigationBottomTab';
 
 const Stack = createStackNavigator();
 
@@ -10,7 +10,7 @@ const Navi = () => {
     <NavigationContainer>
       <Stack.Navigator initialRouteName="LaunchScreen" >
         <Stack.Screen name="LaunchScreen" component={LaunchScreen} />
-        <Stack.Screen name="HomeAudioListing" component={HomeAudioListing} />
+        <Stack.Screen name="NaviBottom" component={NaviBottom} />
       </Stack.Navigator>
     </NavigationContainer>
   );
