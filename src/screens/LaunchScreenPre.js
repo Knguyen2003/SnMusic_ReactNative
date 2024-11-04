@@ -1,31 +1,28 @@
 import React from 'react'
 import { Text, StyleSheet, View, SafeAreaView, ImageBackground, Image, TouchableOpacity} from 'react-native'
 
-const LaunchScreen = () => {
+const LaunchScreenPre = () => {
     return (
       <SafeAreaView style={styles.container}>
-          <ImageBackground source={require('../../assets/images/LaunchScreen/Image01.png')}
+          <ImageBackground source={require('../../assets/images/LaunchScreenPre/background_pre.png')}
           style={styles.image01}>
               {/* Top */}
               <View style={styles.top}>
-              <Image source={require('../../assets/images/LaunchScreen/Image02.png')} 
-              style={styles.image02}></Image>
+                    <Image source={require('../../assets/images/LaunchScreen/Image02.png')} 
+                    style={styles.image02}></Image>
               </View>
               {/* Center */}
               <View style={styles.center}>
-              <Image source={require('../../assets/images/LaunchScreen/YourmusicYourartists.png')} 
-              style={styles.image03}></Image>
+                  <Image source={require('../../assets/images/LaunchScreenPre/Welcome toPremium.png')} 
+                          style={styles.image03}></Image>
+                  <Text style={styles.dot}>...</Text>
               </View>
               {/* Bottom */}
               <View style={styles.bottom}>
                   <TouchableOpacity style={styles.button01}
                     onPress={() => navigation.navigate('HomeAudioListing')}
                   >
-                      <Text style={styles.textButton01}>Create an account</Text>
-                  </TouchableOpacity>
-
-                  <TouchableOpacity style={styles.button02}>
-                      <Text style={styles.textButton02}>I already have an account</Text>
+                      <Text style={styles.textButton01}>Start listening</Text>
                   </TouchableOpacity>
               </View>
           </ImageBackground>
@@ -47,34 +44,34 @@ const styles = StyleSheet.create({
 
   top:{
     flex: 0.75,
-    justifyContent: 'flex-end',
+    justifyContent: 'flex-start',
     alignItems: 'center',
   },
 
   image02: {
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop:225,
+    marginTop: 90,
   },
 
   //-----center-----
 
   center:{
     flex: 4,
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
-
-  image03:{
-    justifyContent: 'center',
+    justifyContent: 'flex-end',
     alignItems: 'center',
-    marginTop:225,
   },
-
+  
+  dot :{
+    color: 'white',
+    fontSize: 50,
+    fontWeight: 'bold',
+    marginBottom:15
+  },
   //-----bottom-----
 
   bottom:{
-    flex: 1,
+    flex: 0.5,
     justifyContent: 'space-around',
     alignItems: 'center',
     marginBottom: 20,
@@ -114,4 +111,4 @@ const styles = StyleSheet.create({
   
 });
 
-export default LaunchScreen;
+export default LaunchScreenPre;
