@@ -1,0 +1,46 @@
+# B1: Sau khi clone dự án từ github thông qua câu lệnh :
+git clone https://github.com/Knguyen2003/SnMusic_ReactNative.git
+# B2: Tạo Branch Mới (việc này giúp không bị lộn code của nhau). Bằng cách :
+-show more opptions -> Open git bash here -> git checkout -b <tên-branch-của-bạn> 
+(Ví dụ git checkout -b feature/add-login) 
+# B3: Thực hiện code .Bằng cách
+-Chọn trên đường dẫn gõ cmd
+-Gõ "code ." để mở Visual Studio
+-Tiến hành code như bình thường
+-Cách xem kết quả code : Chọn View -> Terminal -> npm start
+<Lưu ý> Nếu lỗi gõ lần lượt 2 câu lệnh sau vào terminal:
+- npm install -g expo-cli
+- npm install expo
+- npm start
+- Quét mã để xem kết quả
+
+# B6 : Git status, git add,  git commit -m 
+-Có thể làm trực tiếp trong terminal không cần ra ngoài folder để làm
+
+# B5: Đẩy Nhánh Lên GitHub (chỉ cần làm tới bước này là được r)
+git push origin <tên-branch-của-bạn>
+
+# B6: PullRequest  
+Bước 1: Truy cập vào repository trên GitHub.
+Bước 2: Nhấn vào nút "Compare & pull request" để tạo PR từ nhánh của bạn đến nhánh chính (thường là main hoặc master).
+Bước 3: Thêm mô tả chi tiết về thay đổi và gửi PR
+
+# B7:Code Review
+Các thành viên khác trong nhóm sẽ xem xét PR của bạn.
+Họ có thể để lại nhận xét và yêu cầu thay đổi nếu cần.
+
+
+# B8: Hợp nhất Pull Request
+Sau khi tất cả các vấn đề được giải quyết và PR được chấp nhận, bạn hoặc một thành viên có quyền sẽ hợp nhất PR vào nhánh chính:
+Nhấn nút "Merge pull request".
+
+# B9. Cập nhật Local Repository
+Sau khi PR được hợp nhất, hãy đảm bảo bạn cập nhật nhánh chính của mình:
+- git checkout main
+- git pull origin main
+
+# B10. Xoá Nhánh Đã Hợp Nhất
+Sau khi PR được hợp nhất và bạn không còn cần nhánh đó nữa, hãy xóa nhánh local:
+- git branch -d <tên-branch-của-bạn>
+
+# Sau đó quay lại bước 1.
