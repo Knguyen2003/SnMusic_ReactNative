@@ -167,7 +167,7 @@ const PlaylistDetail_AudioListing = (navigation) => {
                         <View style={styles.detailListSong}>
                             <Image source={require('../../assets/images/PlaylistDetail_AudioListing/song06.png')} style={styles.imageSong}></Image>
                             <View style={styles.detailSong}>
-                                <Text style={styles.titleSong}>Dinamite</Text>
+                                <Text style={styles.titleSong}>Dynamite</Text>
                                 <Text style={styles.nameSinger}>Elena Jimenez</Text>
                                 <View style={styles.detailContentSong}>
                                     <IconAntDesign name="caretright" size={16} color="gray" />

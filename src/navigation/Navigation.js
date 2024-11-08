@@ -4,16 +4,18 @@ import LaunchScreen from '../screens/LaunchScreen';
 import NaviBottom from '../navigation/NavigationBottomTab';
 import PlaylistDetail_AudioListing from '../screens/PlaylistDetail_AudioListing';
 import PlayAnAudio from '../screens/PlayAnAudio';
+import ArtistProfile from '../screens/ArtistProfile'
 
 const Stack = createStackNavigator();
 
 const Navi = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="PlayAnAudio" >
+      <Stack.Navigator initialRouteName="ArtistProfile" >
         <Stack.Screen name="LaunchScreen" component={LaunchScreen} />
         <Stack.Screen name="PlaylistDetail_AudioListing" component={PlaylistDetail_AudioListing} />
         <Stack.Screen name="PlayAnAudio" component={PlayAnAudio} />
+        <Stack.Screen name="ArtistProfile" component={ArtistProfile} />
         <Stack.Screen name="NaviBottom" component={NaviBottom} />
       </Stack.Navigator>
     </NavigationContainer>
