@@ -9,9 +9,16 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import IconEntypo from 'react-native-vector-icons/Entypo';
+import FeedCommentOnAnAudio from '../screens/FeedCommentOnAnAudio';
 
 
 const FeedAudioListing = (navigation) => {
+
+    const [isCommentModalVisible, setCommentModalVisible] = useState(false);
+    const [comment, setComment] = useState('');
+
+    const openCommentModal = () => setCommentModalVisible(true);
+    const closeCommentModal = () => setCommentModalVisible(false);
 
     return(
         <SafeAreaView style={styles.container}>
@@ -75,7 +82,7 @@ const FeedAudioListing = (navigation) => {
                                     <Text style={styles.countLike}>20</Text>
                                 </TouchableOpacity>
 
-                                <TouchableOpacity style={styles.bottomLeft_num}>
+                                <TouchableOpacity style={styles.bottomLeft_num} onPress={openCommentModal}>
                                     <MaterialCommunityIcons name="comment-text-outline" size={25} color="gray" />
                                     <Text style={styles.countLike}>3</Text>
                                 </TouchableOpacity>
@@ -138,7 +145,7 @@ const FeedAudioListing = (navigation) => {
                                     <Text style={styles.countLike}>20</Text>
                                 </TouchableOpacity>
 
-                                <TouchableOpacity style={styles.bottomLeft_num}>
+                                <TouchableOpacity style={styles.bottomLeft_num} onPress={openCommentModal}>
                                     <MaterialCommunityIcons name="comment-text-outline" size={20} color="gray" />
                                     <Text style={styles.countLike}>3</Text>
                                 </TouchableOpacity>
@@ -156,6 +163,13 @@ const FeedAudioListing = (navigation) => {
                     </View>
                 </ScrollView>
             </View>
+
+            <FeedCommentOnAnAudio
+                visible={isCommentModalVisible}
+                onClose={closeCommentModal}
+                comment={comment}
+                setComment={setComment}
+            />
 
         </SafeAreaView>
     );
