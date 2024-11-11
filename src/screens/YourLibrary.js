@@ -7,8 +7,7 @@ import IconAntDesign from 'react-native-vector-icons/AntDesign';
 import IconOctions from 'react-native-vector-icons/Octicons';
 
 
-
-const YourLibrary = (navigation) => {
+const YourLibrary = ({navigation}) => {
 
     const categoryMusic = [
         {
@@ -39,7 +38,7 @@ const YourLibrary = (navigation) => {
 
     const hienThi = ({item}) => {
         return(
-            <TouchableOpacity style={styles.categoryMusic}>
+            <TouchableOpacity style={styles.categoryMusic} onPress={() => navigation.navigate('YourPlaylist')}>
                 <Text style={styles.categoryMusicText}>{item.name}</Text>
             </TouchableOpacity>
         );

@@ -2,6 +2,8 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import HomeAudioListing from '../screens/HomeAudioListing';
 import SearchAudio from '../screens/SearchAudio';
+import Feed from '../screens/FeedAudioListing';
+import Library from '../screens/YourLibrary';
 import Icon from 'react-native-vector-icons/Feather';
 
 
@@ -34,6 +36,26 @@ const Navi = () => {
                       <Icon name="search" color={color} size={size} />
               ),
          }}/>
+
+         <Tab.Screen 
+            name="Feed" 
+            component={Feed} 
+            options={{
+              tabBarIcon: ({ color, size }) => (
+                      <Icon name="search" color={color} size={size} />
+              ),
+         }}/>
+
+         <Tab.Screen 
+            name="Library" 
+            component={Library} 
+            options={{
+              tabBarIcon: ({ color, size }) => (
+                      <Icon name="search" color={color} size={size} />
+              ),
+         }}/>
+
+
       </Tab.Navigator>
     </NavigationContainer>
   );

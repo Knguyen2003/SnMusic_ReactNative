@@ -9,13 +9,14 @@ import HomeAudioListing from '../screens/HomeAudioListing';
 import YourLibrary from '../screens/YourLibrary';
 import YourPlaylist from '../screens/YourPlaylist';
 import FeedAudioListing from '../screens/FeedAudioListing';
+import SubscriptionPlans from '../screens/SubscriptionPlans';
 
 const Stack = createStackNavigator();
 
 const Navi = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="FeedAudioListing" >
+      <Stack.Navigator initialRouteName="SubscriptionPlans" >
         <Stack.Screen name="LaunchScreen" component={LaunchScreen} />
         <Stack.Screen name="HomeAudioListing" component={HomeAudioListing} />
         <Stack.Screen name="PlaylistDetail_AudioListing" component={PlaylistDetail_AudioListing} />
@@ -24,6 +25,7 @@ const Navi = () => {
         <Stack.Screen name="YourLibrary" component={YourLibrary} />
         <Stack.Screen name="YourPlaylist" component={YourPlaylist} />
         <Stack.Screen name="FeedAudioListing" component={FeedAudioListing} />
+        <Stack.Screen name="SubscriptionPlans" component={SubscriptionPlans} />
         <Stack.Screen name="NaviBottom" component={NaviBottom} />
       </Stack.Navigator>
     </NavigationContainer>
