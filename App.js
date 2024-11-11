@@ -13,6 +13,7 @@ const App = () => {
     <Provider store={store}>
       <Navi />
     </Provider>
+
   );
 };
 export default App;
