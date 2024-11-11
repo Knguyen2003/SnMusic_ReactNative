@@ -1,187 +1,223 @@
-import React, {useState} from 'react'
-import { Text, StyleSheet, View, SafeAreaView, ImageBackground, Image, 
-TouchableOpacity, TextInput, ScrollView} from 'react-native'
-import Icon from 'react-native-vector-icons/Octicons';
-import Icon01 from 'react-native-vector-icons/Feather';
+import React, { useState, useEffect } from "react";
+import {
+  Text,
+  StyleSheet,
+  View,
+  SafeAreaView,
+  Image,
+  TouchableOpacity,
+  TextInput,
+  FlatList,
+  ActivityIndicator,
+} from "react-native";
+import Icon from "react-native-vector-icons/Octicons";
+import Icon01 from "react-native-vector-icons/Feather";
 
-const HomeAudioListing = (navigation) => {
-    const [searchQuery, setSearchQuery] = useState('');
+import { useDispatch, useSelector } from "react-redux";
+import { fetchArtistsRequest } from "../redux/actions/artistAction";
 
+import fetchArtists from "../redux/artist";
+
+const HomeAudioListing = ({ navigation }) => {
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const dispatch = useDispatch();
+  const { artists, loading, error } = useSelector((state) => state.artists); // Lấy dữ liệu từ Redux store
+
+  const showPopopularArtists = ({ item }) => {
     return (
-      <SafeAreaView style={styles.container}>
-          {/* Top */}
-          <View style={styles.top}>  
-              {/* Top - Top */}
-              <View style={styles.topTop}>
-                  {/* Top - Top - Left */}
-                  <Image source={require('../../assets/images/HomeAudioListing/Image01Top.png')}></Image>
-
-                  {/* Top - Top - Right*/}
-                  <View style={styles.topTopRight}>
-                      <Icon name="bell" size={30} color="gray" />
-                       <Image source={require('../../assets/images/HomeAudioListing/Image03Top.png')} style={styles.avataTop}></Image>
-                  </View>
-              </View>
-              {/* Top - center */}
-              <View style={styles.topCenter}>
-                {/* Top - Center */}
-                <Image source={require('../../assets/images/HomeAudioListing/Goodmorning.png')}></Image>
-                <Image source={require('../../assets/images/HomeAudioListing/AshleyScott.png')}></Image>
-              </View>
-
-              {/* Top - Bottom */}
-              <View style={styles.topBottom}>
-              <Icon01 name="search" size={25} color="black" />
-              <TextInput
-                  style={styles.inputSearch}
-                  placeholder="What you want to listen to"
-                  placeholderTextColor="#888"
-                  value={searchQuery}
-                  onChangeText={(text) => setSearchQuery(text)}
-              /> 
-              </View>
-          </View>
-
-          {/* center */}
-
-          <View style={styles.content}>  
-              <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
-                  {/* Suggestions for you */}
-                  <View style={styles.titileSuggestion}>
-                      <Text style={styles.textTitle}>Suggestions for you</Text>
-                      <View style={styles.ContentInside}>
-
-                      </View>
-                  </View>
-
-                  {/* Charts */}
-                  <View style={styles.Charts}>
-                      <View style={styles.titileContent}>
-                          <Text style={styles.textTitle}>Charts</Text>
-                          <TouchableOpacity>
-                              <Text style={styles.textSeeAll}>See all</Text>
-                          </TouchableOpacity>
-                      </View>
-                      <View style={styles.ContentInside}>
-                        
-                      </View>
-                  </View>
-
-                  {/* Trending albums */}
-                  <View style={styles.TrendingAlb}>
-                      <View style={styles.titileContent}>
-                          <Text style={styles.textTitle}>Trending albums</Text>
-                          <TouchableOpacity>
-                              <Text style={styles.textSeeAll}>See all</Text>
-                          </TouchableOpacity>
-                      </View>
-                      <View style={styles.ContentInside}>
-                        
-                      </View>
-                  </View>
-
-                  {/* Popular artists */}
-                  <View style={styles.PopularAr}>
-                      <View style={styles.titileContent}>
-                          <Text style={styles.textTitle}>Popular artists</Text>
-                          <TouchableOpacity>
-                              <Text style={styles.textSeeAll}>See all</Text>
-                          </TouchableOpacity>
-                      </View>
-                      <View style={styles.ContentInside}>
-                        
-                      </View>
-                  </View>
-              </ScrollView>
-          </View>
-
-      </SafeAreaView>
+      <TouchableOpacity>
+        <Text>{item.name}</Text>
+      </TouchableOpacity>
     );
+  };
+
+  useEffect(() => {
+    dispatch(fetchArtistsRequest()); // Dispatch action yêu cầu lấy dữ liệu
+  }, [dispatch]);
+
+  if (loading) {
+    return <ActivityIndicator size="large" color="#0000ff" />;
+  }
+
+  if (error) {
+    return <Text>Error: {error}</Text>;
+  }
+
+  const sections = [
+    {
+      title: "Suggestions for you",
+      content: <View style={styles.ContentInside} />,
+    },
+    {
+      title: "Charts",
+      content: <View style={styles.ContentInside} />,
+    },
+    {
+      title: "Trending albums",
+      content: <View style={styles.ContentInside} />,
+    },
+    {
+      title: "Popular artists",
+      content: (
+        <View style={styles.ContentInside}>
+          <FlatList
+            data={artists}
+            keyExtractor={(item) => item.id}
+            renderItem={showPopopularArtists}
+          />
+        </View>
+      ),
+    },
+  ];
+
+  return (
+    <SafeAreaView style={styles.container}>
+      {/* Top */}
+      <View style={styles.top}>
+        {/* Top - Top */}
+        <View style={styles.topTop}>
+          {/* Top - Top - Left */}
+          <Image
+            source={require("../../assets/images/HomeAudioListing/Image01Top.png")}
+          ></Image>
+
+          {/* Top - Top - Right*/}
+          <View style={styles.topTopRight}>
+            <Icon name="bell" size={30} color="gray" />
+            <Image
+              source={require("../../assets/images/HomeAudioListing/Image03Top.png")}
+              style={styles.avataTop}
+            ></Image>
+          </View>
+        </View>
+        {/* Top - center */}
+        <View style={styles.topCenter}>
+          {/* Top - Center */}
+          <Image
+            source={require("../../assets/images/HomeAudioListing/Goodmorning.png")}
+          ></Image>
+          <Image
+            source={require("../../assets/images/HomeAudioListing/AshleyScott.png")}
+          ></Image>
+        </View>
+
+        {/* Top - Bottom */}
+        <View style={styles.topBottom}>
+          <Icon01 name="search" size={25} color="black" />
+          <TextInput
+            style={styles.inputSearch}
+            placeholder="What you want to listen to"
+            placeholderTextColor="#888"
+            value={searchQuery}
+            onChangeText={(text) => setSearchQuery(text)}
+          />
+        </View>
+      </View>
+
+      {/* center */}
+
+      <View style={styles.content}>
+        <FlatList
+          data={sections}
+          keyExtractor={(item, index) => index.toString()}
+          renderItem={({ item }) => (
+            <View style={styles.section}>
+              <View style={styles.titileContent}>
+                <Text style={styles.textTitle}>{item.title}</Text>
+                <TouchableOpacity>
+                  <Text style={styles.textSeeAll}>See all</Text>
+                </TouchableOpacity>
+              </View>
+              {item.content}
+            </View>
+          )}
+          showsVerticalScrollIndicator={false}
+        />
+      </View>
+    </SafeAreaView>
+  );
 };
 
 const styles = StyleSheet.create({
-  container : {
+  container: {
     flex: 1,
     padding: 10,
-    paddingBottom:0,
+    paddingBottom: 0,
   },
 
   //-----top-----
 
-  top:{
+  top: {
     flex: 2,
   },
 
-  topTop:{
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
+  topTop: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
   },
 
-  topTopRight:{
-    flexDirection: 'row',
+  topTopRight: {
+    flexDirection: "row",
     marginTop: 10,
-    alignItems: 'center',
+    alignItems: "center",
   },
 
-  avataTop:{
+  avataTop: {
     width: 40,
     height: 40,
     borderRadius: 50,
     marginLeft: 15,
   },
 
-  topCenter:{
+  topCenter: {
     marginTop: 10,
   },
 
-  topBottom:{
+  topBottom: {
     padding: 5,
     height: 40,
-    borderColor: 'gray',
+    borderColor: "gray",
     borderWidth: 1,
     borderRadius: 20,
-    color: 'black',
-    flexDirection: 'row',
+    color: "black",
+    flexDirection: "row",
     marginTop: 15,
   },
 
-  inputSearch:{
+  inputSearch: {
     marginLeft: 10,
-    fontSize:16,
+    fontSize: 16,
   },
   //-----content-----
 
-  content:{
+  content: {
     flex: 5.5,
     marginBottom: 10,
   },
 
-  scrollView:{
-    flex: 1,
-  },
-
-  textSeeAll:{
-    color: 'gray',
+  textSeeAll: {
+    color: "gray",
     fontSize: 17,
   },
 
-  textTitle:{
+  textTitle: {
     fontSize: 20,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     paddingBottom: 5,
   },
 
-  titileContent:{
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+  titileContent: {
+    flexDirection: "row",
+    justifyContent: "space-between",
     padding: 10,
   },
 
-  ContentInside:{
+  ContentInside: {
     height: 200,
-    backgroundColor: 'orange',
-  }
+    backgroundColor: "orange",
+  },
 });
 
 export default HomeAudioListing;
