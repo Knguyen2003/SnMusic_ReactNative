@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import {
-  View,
   Text,
   SafeAreaView,
   StyleSheet,
@@ -80,11 +79,15 @@ const Login = ({ navigation }) => {
 
       {error ? <Text style={styles.error}>{error}</Text> : null}
 
-      <TouchableOpacity onPress={handleLogin} disabled={loading}>
+      <TouchableOpacity
+        onPress={handleLogin}
+        disabled={loading}
+        style={styles.button}
+      >
         {loading ? (
           <ActivityIndicator size="small" color="#0000ff" />
         ) : (
-          <Text>Login</Text>
+          <Text style={{ fontWeight: "bold", color: "white" }}>Login</Text>
         )}
       </TouchableOpacity>
     </SafeAreaView>
@@ -94,6 +97,9 @@ const Login = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#f5f5f5",
   },
   error: {
     color: "red",
@@ -102,6 +108,16 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     borderWidth: 1,
     padding: 10,
+    width: "80%",
+  },
+  button: {
+    backgroundColor: "blue",
+    padding: 10,
+    borderRadius: 5,
+    alignItems: "center",
+    justifyContent: "center",
+    width: "80%",
+    borderWidth: 1,
   },
 });
 

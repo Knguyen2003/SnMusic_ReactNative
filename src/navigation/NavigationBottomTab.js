@@ -21,6 +21,7 @@ const Navi = ({ navigation }) => {
           tabBarIcon: ({ color, size }) => (
             <Icon name="home" color={color} size={size} />
           ),
+          headerShown: false,
         }}
       />
 
@@ -31,6 +32,7 @@ const Navi = ({ navigation }) => {
           tabBarIcon: ({ color, size }) => (
             <Icon name="search" color={color} size={size} />
           ),
+          headerShown: false,
         }}
       />
     </Tab.Navigator>

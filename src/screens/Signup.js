@@ -1,15 +1,18 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   TextInput,
   Button,
-  View,
   Text,
   StyleSheet,
   Alert,
   SafeAreaView,
+  TouchableOpacity,
 } from "react-native";
 import { auth } from "../component/configFirebase";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import {
+  createUserWithEmailAndPassword,
+  sendEmailVerification,
+} from "firebase/auth";
 
 const RegisterScreen = ({ navigation }) => {
   const [email, setEmail] = useState("");
@@ -24,6 +27,9 @@ const RegisterScreen = ({ navigation }) => {
     return regex.test(password);
   };
 
+  {
+    /*ĐĂNG KÍ VỚI EMAIL VÀ PASSWORD */
+  }
   const handleRegister = () => {
     setLoading(true);
     setError("");
@@ -36,22 +42,32 @@ const RegisterScreen = ({ navigation }) => {
       return;
     }
 
-    createUserWithEmailAndPassword(auth, email, password)
-      .then(() => {
-        Alert.alert("Sign Up Successful", "Account created and signed in!");
-        setEmail("");
-        setPassword("");
-        setLoading(false);
-        navigation.navigate("NaviBottom");
+    createUserWithEmailAndPassword(auth, email, password) //Tạo tài khoản mới với email và password
+      .then((userCredential) => {
+        const user = userCredential.user; //Lấy thông tin user từ userCredential
+
+        sendEmailVerification(user) //Gửi email xác thực tài khoản
+          .then(() => {
+            Alert.alert(
+              "Sign Up Successful",
+              "Account created! Please check your email to verify your address."
+            );
+            setEmail("");
+            setPassword("");
+            setLoading(false);
+            navigation.navigate("NaviBottom");
+          })
+          .catch((error) => {
+            setLoading(false);
+            setError(`Error sending verification email: ${error.message}`);
+          });
       })
       .catch((error) => {
         setLoading(false);
         if (error.code === "auth/email-already-in-use") {
           setError("That email address is already in use!");
-        } else if (error.code === "auth/invalid-email") {
-          setError("That email address is invalid!");
         } else {
-          setError(`An error occurred: ${error.message}`);
+          setError(`That email address is invalid!`);
         }
       });
   };
@@ -74,11 +90,17 @@ const RegisterScreen = ({ navigation }) => {
 
       {error ? <Text style={styles.error}>{error}</Text> : null}
 
-      <Button
-        title={loading ? "Signing up..." : "Sign Up"} //Thay đổi title của button khi đang loading
+      <TouchableOpacity
         onPress={handleRegister}
-        disabled={loading} //Dùng để disable button khi đang loading (không cho người dùng click)
-      />
+        disabled={loading}
+        style={styles.button}
+      >
+        {loading ? (
+          <ActivityIndicator size="small" color="#0000ff" />
+        ) : (
+          <Text style={{ fontWeight: "bold", color: "white" }}>Sign up</Text>
+        )}
+      </TouchableOpacity>
     </SafeAreaView>
   );
 };
@@ -86,14 +108,28 @@ const RegisterScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     padding: 20,
+    justifyContent: "center",
+    alignItems: "center",
+    flex: 1,
+    backgroundColor: "#fff",
   },
   input: {
     marginBottom: 10,
     borderWidth: 1,
     padding: 10,
+    width: "80%",
   },
   error: {
     color: "red",
+  },
+  button: {
+    backgroundColor: "blue",
+    padding: 10,
+    borderRadius: 5,
+    alignItems: "center",
+    justifyContent: "center",
+    width: "80%",
+    borderWidth: 1,
   },
 });
 

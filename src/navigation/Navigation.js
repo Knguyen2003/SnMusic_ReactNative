@@ -11,10 +11,26 @@ const Navi = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="LaunchScreen">
-        <Stack.Screen name="LaunchScreen" component={LaunchScreen} />
-        <Stack.Screen name="Signup" component={Signup} />
-        <Stack.Screen name="Login" component={Login} />
-        <Stack.Screen name="NaviBottom" component={NaviBottom} />
+        <Stack.Screen
+          name="LaunchScreen"
+          component={LaunchScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Signup"
+          component={Signup}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Login"
+          component={Login}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="NaviBottom"
+          component={NaviBottom}
+          options={{ headerShown: false }}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );

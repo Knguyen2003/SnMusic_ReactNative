@@ -8,6 +8,17 @@ npx expo install @react-native-firebase/app @react-native-firebase/auth
 npx expo install @react-native-firebase/app @react-native-firebase/analytics
 
 
+Google
+
+npm install @react-native-google-signin/google-signin
+
+
+Facebook
+
+npm install react-native-fbsdk-next
+
+
+
 
 
 

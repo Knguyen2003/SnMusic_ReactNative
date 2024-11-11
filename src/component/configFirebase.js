@@ -7,6 +7,8 @@ import {
 } from "firebase/auth";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
+import { getFirestore } from "firebase/firestore";
+
 // Cấu hình Firebase
 const firebaseConfig = {
   apiKey: "AIzaSyCB3Rhl5cKHFoJihkQCr8C24V4e4-ZLc7s",
@@ -21,9 +23,12 @@ const firebaseConfig = {
 // Khởi tạo Firebase
 const app = initializeApp(firebaseConfig);
 
+// Khởi tạo Firestore
+const db = getFirestore(app);
+
 // Khởi tạo Auth với AsyncStorage (giúp lưu trữ thông tin đăng nhập)
 const auth = initializeAuth(app, {
   persistence: getReactNativePersistence(AsyncStorage), // Lưu trữ thông tin đăng nhập
 });
 
-export { app, auth };
+export { app, auth, db };

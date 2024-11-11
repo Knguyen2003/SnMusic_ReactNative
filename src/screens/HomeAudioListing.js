@@ -1,20 +1,75 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Text,
   StyleSheet,
   View,
   SafeAreaView,
-  ImageBackground,
   Image,
   TouchableOpacity,
   TextInput,
-  ScrollView,
+  FlatList,
+  ActivityIndicator,
 } from "react-native";
 import Icon from "react-native-vector-icons/Octicons";
 import Icon01 from "react-native-vector-icons/Feather";
 
+import { useDispatch, useSelector } from "react-redux";
+import { fetchArtistsRequest } from "../redux/actions/artistAction";
+
+import fetchArtists from "../redux/artist";
+
 const HomeAudioListing = ({ navigation }) => {
   const [searchQuery, setSearchQuery] = useState("");
+
+  const dispatch = useDispatch();
+  const { artists, loading, error } = useSelector((state) => state.artists); // Lấy dữ liệu từ Redux store
+
+  const showPopopularArtists = ({ item }) => {
+    return (
+      <TouchableOpacity>
+        <Text>{item.name}</Text>
+      </TouchableOpacity>
+    );
+  };
+
+  useEffect(() => {
+    dispatch(fetchArtistsRequest()); // Dispatch action yêu cầu lấy dữ liệu
+  }, [dispatch]);
+
+  if (loading) {
+    return <ActivityIndicator size="large" color="#0000ff" />;
+  }
+
+  if (error) {
+    return <Text>Error: {error}</Text>;
+  }
+
+  const sections = [
+    {
+      title: "Suggestions for you",
+      content: <View style={styles.ContentInside} />,
+    },
+    {
+      title: "Charts",
+      content: <View style={styles.ContentInside} />,
+    },
+    {
+      title: "Trending albums",
+      content: <View style={styles.ContentInside} />,
+    },
+    {
+      title: "Popular artists",
+      content: (
+        <View style={styles.ContentInside}>
+          <FlatList
+            data={artists}
+            keyExtractor={(item) => item.id}
+            renderItem={showPopopularArtists}
+          />
+        </View>
+      ),
+    },
+  ];
 
   return (
     <SafeAreaView style={styles.container}>
@@ -63,49 +118,22 @@ const HomeAudioListing = ({ navigation }) => {
       {/* center */}
 
       <View style={styles.content}>
-        <ScrollView
-          style={styles.scrollView}
+        <FlatList
+          data={sections}
+          keyExtractor={(item, index) => index.toString()}
+          renderItem={({ item }) => (
+            <View style={styles.section}>
+              <View style={styles.titileContent}>
+                <Text style={styles.textTitle}>{item.title}</Text>
+                <TouchableOpacity>
+                  <Text style={styles.textSeeAll}>See all</Text>
+                </TouchableOpacity>
+              </View>
+              {item.content}
+            </View>
+          )}
           showsVerticalScrollIndicator={false}
-        >
-          {/* Suggestions for you */}
-          <View style={styles.titileSuggestion}>
-            <Text style={styles.textTitle}>Suggestions for you</Text>
-            <View style={styles.ContentInside}></View>
-          </View>
-
-          {/* Charts */}
-          <View style={styles.Charts}>
-            <View style={styles.titileContent}>
-              <Text style={styles.textTitle}>Charts</Text>
-              <TouchableOpacity>
-                <Text style={styles.textSeeAll}>See all</Text>
-              </TouchableOpacity>
-            </View>
-            <View style={styles.ContentInside}></View>
-          </View>
-
-          {/* Trending albums */}
-          <View style={styles.TrendingAlb}>
-            <View style={styles.titileContent}>
-              <Text style={styles.textTitle}>Trending albums</Text>
-              <TouchableOpacity>
-                <Text style={styles.textSeeAll}>See all</Text>
-              </TouchableOpacity>
-            </View>
-            <View style={styles.ContentInside}></View>
-          </View>
-
-          {/* Popular artists */}
-          <View style={styles.PopularAr}>
-            <View style={styles.titileContent}>
-              <Text style={styles.textTitle}>Popular artists</Text>
-              <TouchableOpacity>
-                <Text style={styles.textSeeAll}>See all</Text>
-              </TouchableOpacity>
-            </View>
-            <View style={styles.ContentInside}></View>
-          </View>
-        </ScrollView>
+        />
       </View>
     </SafeAreaView>
   );
@@ -167,10 +195,6 @@ const styles = StyleSheet.create({
   content: {
     flex: 5.5,
     marginBottom: 10,
-  },
-
-  scrollView: {
-    flex: 1,
   },
 
   textSeeAll: {
