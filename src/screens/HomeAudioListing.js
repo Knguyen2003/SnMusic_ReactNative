@@ -144,6 +144,7 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 10,
     paddingBottom: 0,
+    marginTop: 30,
   },
 
   //-----top-----
