@@ -41,8 +41,6 @@ const Login = ({ navigation }) => {
       })
       .catch((error) => {
         setLoading(false);
-        console.error("Error Code: ", error.code);
-        console.error("Error Message: ", error.message);
         if (error.code === "auth/user-not-found") {
           setError("No user found for this email address.");
           return;
