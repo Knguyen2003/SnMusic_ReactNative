@@ -2,6 +2,7 @@
   "expo": {
     "name": "ReactNative_MusicApp",
     "slug": "ReactNative_MusicApp",
+    "newArchEnabled": true,
     "version": "1.0.0",
     "orientation": "portrait",
     "userInterfaceStyle": "light",

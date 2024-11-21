@@ -16,22 +16,22 @@ import Icon01 from "react-native-vector-icons/Feather";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchArtistsRequest } from "../redux/actions/artistAction";
 
-import fetchArtists from "../redux/artist";
-
 const HomeAudioListing = ({ navigation }) => {
   const [searchQuery, setSearchQuery] = useState("");
 
   const dispatch = useDispatch();
-  const { artists, loading, error } = useSelector((state) => state.artists); // Lấy dữ liệu từ Redux store
-
+  const { artists, loading, error } = useSelector((state) => state.artists);
   const showPopopularArtists = ({ item }) => {
     return (
       <TouchableOpacity>
         <Text>{item.name}</Text>
+        <Image
+          source={{ uri: item.image }}
+          style={{ width: 100, height: 100 }}
+        />
       </TouchableOpacity>
     );
   };
-
   useEffect(() => {
     dispatch(fetchArtistsRequest()); // Dispatch action yêu cầu lấy dữ liệu
   }, [dispatch]);
@@ -41,9 +41,12 @@ const HomeAudioListing = ({ navigation }) => {
   }
 
   if (error) {
-    return <Text>Error: {error}</Text>;
+    return (
+      <Text style={{ justifyContent: "center", alignItems: "center" }}>
+        Error: {error}
+      </Text>
+    );
   }
-
   const sections = [
     {
       title: "Suggestions for you",
