@@ -15,12 +15,17 @@ import Icon01 from "react-native-vector-icons/Feather";
 
 import { useDispatch, useSelector } from "react-redux";
 import { fetchArtistsRequest } from "../redux/actions/artistAction";
+import { fetchTopsRequest } from "../redux/actions/topAction";
+import { fetchSongsRequest } from "../redux/actions/songAction";
 
 const HomeAudioListing = ({ navigation }) => {
   const [searchQuery, setSearchQuery] = useState("");
 
   const dispatch = useDispatch();
   const { artists, loading, error } = useSelector((state) => state.artists);
+  const { tops, loading3, error3 } = useSelector((state) => state.tops);
+  const { songs, loading2, error2 } = useSelector((state) => state.songs);
+
   const showPopopularArtists = ({ item }) => {
     return (
       <TouchableOpacity>
@@ -32,15 +37,42 @@ const HomeAudioListing = ({ navigation }) => {
       </TouchableOpacity>
     );
   };
+
+  const showTops = ({ item }) => {
+    return (
+      <TouchableOpacity>
+        <Image
+          source={{ uri: item.image }}
+          style={{ width: 100, height: 100 }}
+        />
+        <Text>{item.name}</Text>
+      </TouchableOpacity>
+    );
+  };
+
+  const showSongs = ({ item }) => {
+    return (
+      <TouchableOpacity>
+        <Image
+          source={{ uri: item.image }}
+          style={{ width: 100, height: 100 }}
+        />
+        <Text>{item.name}</Text>
+      </TouchableOpacity>
+    );
+  };
+
   useEffect(() => {
-    dispatch(fetchArtistsRequest()); // Dispatch action yêu cầu lấy dữ liệu
+    dispatch(fetchArtistsRequest());
+    dispatch(fetchTopsRequest());
+    dispatch(fetchSongsRequest());
   }, [dispatch]);
 
-  if (loading) {
+  if (loading || loading3 || loading2) {
     return <ActivityIndicator size="large" color="#0000ff" />;
   }
 
-  if (error) {
+  if (error || error2 || error3) {
     return (
       <Text style={{ justifyContent: "center", alignItems: "center" }}>
         Error: {error}
@@ -50,11 +82,27 @@ const HomeAudioListing = ({ navigation }) => {
   const sections = [
     {
       title: "Suggestions for you",
-      content: <View style={styles.ContentInside} />,
+      content: (
+        <View style={styles.ContentInside}>
+          <FlatList
+            data={songs}
+            keyExtractor={(item) => item.id}
+            renderItem={showSongs}
+          />
+        </View>
+      ),
     },
     {
       title: "Charts",
-      content: <View style={styles.ContentInside} />,
+      content: (
+        <View style={styles.ContentInside}>
+          <FlatList
+            data={tops}
+            keyExtractor={(item) => item.id}
+            renderItem={showTops}
+          />
+        </View>
+      ),
     },
     {
       title: "Trending albums",
