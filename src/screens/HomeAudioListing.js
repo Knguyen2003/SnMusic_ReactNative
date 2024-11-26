@@ -14,17 +14,26 @@ import Icon from "react-native-vector-icons/Octicons";
 import Icon01 from "react-native-vector-icons/Feather";
 
 import { useDispatch, useSelector } from "react-redux";
+
 import { fetchArtistsRequest } from "../redux/actions/artistAction";
+import { fetchAlbumTrenRequest } from "../redux/actions/trendingAlbumAction";
 import { fetchTopsRequest } from "../redux/actions/topAction";
 import { fetchSongsRequest } from "../redux/actions/songAction";
+
 
 const HomeAudioListing = ({ navigation }) => {
   const [searchQuery, setSearchQuery] = useState("");
 
   const dispatch = useDispatch();
   const { artists, loading, error } = useSelector((state) => state.artists);
+  const { albumTrend, loading1, error1 } = useSelector((state) => state.albumTrend);
   const { tops, loading3, error3 } = useSelector((state) => state.tops);
   const { songs, loading2, error2 } = useSelector((state) => state.songs);
+
+  const displayedAlbums = albumTrend.slice(0, 6);
+
+  
+
 
   const showPopopularArtists = ({ item }) => {
     return (
@@ -38,6 +47,19 @@ const HomeAudioListing = ({ navigation }) => {
     );
   };
 
+  const showAlbumTrending = ({ item }) => {
+    return (
+      <TouchableOpacity style={styles.album}>
+        <View style={styles.containerAlbum}>
+          <View>
+            <Text style={styles.textNameAB}>{item.nameAlbum}</Text>
+            <Text style={styles.textNameSG}>{item.nameSinger}</Text>
+          </View>
+        </View>
+      </TouchableOpacity>
+    );
+  };  
+
   const showTops = ({ item }) => {
     return (
       <TouchableOpacity>
@@ -49,6 +71,7 @@ const HomeAudioListing = ({ navigation }) => {
       </TouchableOpacity>
     );
   };
+
 
   const showSongs = ({ item }) => {
     return (
@@ -66,6 +89,7 @@ const HomeAudioListing = ({ navigation }) => {
     dispatch(fetchArtistsRequest());
     dispatch(fetchTopsRequest());
     dispatch(fetchSongsRequest());
+    dispatch(fetchAlbumTrenRequest());
   }, [dispatch]);
 
   if (loading || loading3 || loading2) {
@@ -106,7 +130,17 @@ const HomeAudioListing = ({ navigation }) => {
     },
     {
       title: "Trending albums",
-      content: <View style={styles.ContentInside} />,
+      content: (
+        <View style={styles.ContentInside}>
+           <FlatList
+            data={displayedAlbums}
+            keyExtractor={(item) => item.id}
+            renderItem={showAlbumTrending}
+            horizontal={true} // thanh cuon ngang
+            showsHorizontalScrollIndicator={false}
+          />
+        </View>
+      ),
     },
     {
       title: "Popular artists",
@@ -267,9 +301,42 @@ const styles = StyleSheet.create({
   },
 
   ContentInside: {
-    height: 200,
-    backgroundColor: "orange",
+    height: 250,
+    backgroundColor: "red",
   },
+
+  // Album Trending
+  album:{
+    alignItems : "center",
+    justifyContent: "center",
+    margin:5,
+  },
+
+  imageAlbum: {
+    width: 200,
+    height: 200,
+    borderRadius: 10,
+  },
+
+  containerAlbum:{
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "space-between",
+  },
+
+  textNameAB:{
+    width: 180,
+    fontSize: 18,
+    fontWeight: "bold",
+    textAlign: "left",
+  },
+
+  nameSinger:{
+    fontSize: 17,
+    fontWeight: "bold",
+    textAlign:"left",
+  },
+
 });
 
 export default HomeAudioListing;
