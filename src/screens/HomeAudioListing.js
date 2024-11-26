@@ -17,6 +17,9 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { fetchArtistsRequest } from "../redux/actions/artistAction";
 import { fetchAlbumTrenRequest } from "../redux/actions/trendingAlbumAction";
+import { fetchTopsRequest } from "../redux/actions/topAction";
+import { fetchSongsRequest } from "../redux/actions/songAction";
+
 
 const HomeAudioListing = ({ navigation }) => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -24,9 +27,13 @@ const HomeAudioListing = ({ navigation }) => {
   const dispatch = useDispatch();
   const { artists, loading, error } = useSelector((state) => state.artists);
   const { albumTrend, loading1, error1 } = useSelector((state) => state.albumTrend);
-
+  const { tops, loading3, error3 } = useSelector((state) => state.tops);
+  const { songs, loading2, error2 } = useSelector((state) => state.songs);
 
   const displayedAlbums = albumTrend.slice(0, 6);
+
+  
+
 
   const showPopopularArtists = ({ item }) => {
     return (
@@ -45,32 +52,51 @@ const HomeAudioListing = ({ navigation }) => {
       <TouchableOpacity style={styles.album}>
         <View style={styles.containerAlbum}>
           <View>
-            <Image
-              source={{ uri: item.image }}
-              style={styles.imageAlbum}
-            />
-          </View>
-          
-          <View>
             <Text style={styles.textNameAB}>{item.nameAlbum}</Text>
             <Text style={styles.textNameSG}>{item.nameSinger}</Text>
           </View>
         </View>
       </TouchableOpacity>
     );
+  };  
+
+  const showTops = ({ item }) => {
+    return (
+      <TouchableOpacity>
+        <Image
+          source={{ uri: item.image }}
+          style={{ width: 100, height: 100 }}
+        />
+        <Text>{item.name}</Text>
+      </TouchableOpacity>
+    );
   };
 
 
+  const showSongs = ({ item }) => {
+    return (
+      <TouchableOpacity>
+        <Image
+          source={{ uri: item.image }}
+          style={{ width: 100, height: 100 }}
+        />
+        <Text>{item.name}</Text>
+      </TouchableOpacity>
+    );
+  };
+
   useEffect(() => {
     dispatch(fetchArtistsRequest());
+    dispatch(fetchTopsRequest());
+    dispatch(fetchSongsRequest());
     dispatch(fetchAlbumTrenRequest());
   }, [dispatch]);
 
-  if (loading || loading1) {
+  if (loading || loading3 || loading2) {
     return <ActivityIndicator size="large" color="#0000ff" />;
   }
 
-  if (error || error1) {
+  if (error || error2 || error3) {
     return (
       <Text style={{ justifyContent: "center", alignItems: "center" }}>
         Error: {error}
@@ -80,11 +106,27 @@ const HomeAudioListing = ({ navigation }) => {
   const sections = [
     {
       title: "Suggestions for you",
-      content: <View style={styles.ContentInside} />,
+      content: (
+        <View style={styles.ContentInside}>
+          <FlatList
+            data={songs}
+            keyExtractor={(item) => item.id}
+            renderItem={showSongs}
+          />
+        </View>
+      ),
     },
     {
       title: "Charts",
-      content: <View style={styles.ContentInside} />,
+      content: (
+        <View style={styles.ContentInside}>
+          <FlatList
+            data={tops}
+            keyExtractor={(item) => item.id}
+            renderItem={showTops}
+          />
+        </View>
+      ),
     },
     {
       title: "Trending albums",

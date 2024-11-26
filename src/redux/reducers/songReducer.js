@@ -1,7 +1,7 @@
 import {
-  FETCH_SONGS_REQUEST,
-  FETCH_SONGS_SUCCESS,
   FETCH_SONGS_FAILURE,
+  FETCH_SONGS_SUCCESS,
+  FETCH_SONGS_REQUEST,
 } from "../actions/songAction";
 
 const initialState = {
@@ -10,7 +10,7 @@ const initialState = {
   error: null,
 };
 
-const songsReducer = (state = initialState, action) => {
+export default function songsReducer(state = initialState, action) {
   switch (action.type) {
     case FETCH_SONGS_REQUEST:
       return { ...state, loading: true };
@@ -21,6 +21,4 @@ const songsReducer = (state = initialState, action) => {
     default:
       return state;
   }
-};
-
-export default songsReducer;
+}
