@@ -2,6 +2,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import createSagaMiddleware from "redux-saga";
 
 import artistsReducer from "./reducers/artistReducer";
+import albumTrendReducer from "./reducers/trendingAlbumReducer";
 
 import rootSaga from "./sagas/rootSaga";
 
@@ -11,6 +12,7 @@ const sagaMiddleware = createSagaMiddleware();
 const store = configureStore({
   reducer: {
     artists: artistsReducer,
+    albumTrend: albumTrendReducer,
   },
   // Sử dụng callback để cấu hình middleware
   middleware: (getDefaultMiddleware) =>
