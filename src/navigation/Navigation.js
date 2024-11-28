@@ -10,6 +10,10 @@ import YourLibrary from "../screens/YourLibrary";
 import YourPlaylist from "../screens/YourPlaylist";
 import FeedAudioListing from "../screens/FeedAudioListing";
 import SubscriptionPlans from "../screens/SubscriptionPlans";
+import TrendingAlbumSeeAll from "../screens/TrendingAlbumSeeAll";
+import SuggestionsForYouSeeAll from "../screens/SuggestionsForYouSeeAll";
+import PopularArtistsSeeAll from "../screens/PopularArtistsSeeAll";
+import ChartsSeeAll from "../screens/ChartsSeeAll";
 
 import Signup from "../screens/Signup";
 import Login from "../screens/Login";
@@ -73,6 +77,26 @@ const Navi = () => {
         <Stack.Screen
           name="SubscriptionPlans"
           component={SubscriptionPlans}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="TrendingAlbumSeeAll"
+          component={TrendingAlbumSeeAll}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="SuggestionsForYouSeeAll"
+          component={SuggestionsForYouSeeAll}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="PopularArtistsSeeAll"
+          component={PopularArtistsSeeAll}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="ChartsSeeAll"
+          component={ChartsSeeAll}
           options={{ headerShown: false }}
         />
         <Stack.Screen
