@@ -9,7 +9,7 @@ import { supabase } from "../../component/supabaseClient";
 function* fetchAlbumTrendSaga() {
   try {
     const { data, error } = yield call(() =>
-      supabase.from("TrendingAlbum").select("*")
+      supabase.from("album").select("*")
     );
     if (error) throw error;
     yield put(fetchAlbumTrendSuccess(data));
