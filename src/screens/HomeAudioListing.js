@@ -50,7 +50,9 @@ const HomeAudioListing = ({ navigation }) => {
     return (
       <TouchableOpacity
         style={styles.popular}
+
         onPress={() => navigation.navigate("ArtistDetail", { artist: item })}
+
       >
         <Image source={{ uri: item.image }} style={styles.imageSingerP} />
         <Text style={styles.nameSingerP}>{item.name}</Text>
@@ -221,7 +223,9 @@ const HomeAudioListing = ({ navigation }) => {
           <View style={styles.topTopRight}>
             <Icon name="bell" size={30} color="gray" />
             <Image
+
               source={require("../../assets/images/HomeAudioListing/avata_01.jpg")}
+
               style={styles.avataTop}
             ></Image>
           </View>
@@ -229,13 +233,17 @@ const HomeAudioListing = ({ navigation }) => {
         {/* Top - center */}
         <View style={styles.topCenter}>
           {/* Top - Center */}
+
           <Text style={{ fontSize: 17, fontWeight: "bold", color:"rgba(173, 216, 230, 0.9)"}}>Xin Chào,</Text>
           <Text style={{ fontSize: 19, fontWeight: "bold"}}>Khôi Nguyên</Text>
+
         </View>
 
         {/* Top - Bottom */}
         <View style={styles.topBottom}>
+
           <Icon01 name="search" size={25} color="black" style={styles.icon}/>
+
           <TextInput
             style={styles.inputSearch}
             placeholder="What you want to listen to"
@@ -328,6 +336,7 @@ const styles = StyleSheet.create({
     marginTop: 5,
     marginLeft: 6,
   },
+
   //-----content-----
 
   content: {

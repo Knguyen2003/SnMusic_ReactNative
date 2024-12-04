@@ -74,7 +74,9 @@ const RegisterScreen = ({ navigation }) => {
 
   return (
     <SafeAreaView style={styles.container}>
+
       <Text style={{ fontSize: 30, fontWeight: "bold", marginBottom: 20 }}>Register an Account</Text>
+
       <TextInput
         placeholder="Email"
         value={email}

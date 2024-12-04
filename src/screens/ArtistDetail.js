@@ -1,5 +1,7 @@
+
 import React from "react";
 import { Text, StyleSheet, View, SafeAreaView, Image, ScrollView } from "react-native";
+
 
 const ArtistDetail = ({ navigation, route }) => {
   const { artist } = route.params;
@@ -8,6 +10,7 @@ const ArtistDetail = ({ navigation, route }) => {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.top}>
+
         <Image source={{ uri: artist.image }} style={styles.imageTop} />
         <Text style={styles.nameAlbum}>{artist.name}</Text>
       </View>
@@ -23,6 +26,7 @@ const ArtistDetail = ({ navigation, route }) => {
         <ScrollView>
           <Text style={styles.describe}>{artist.describe}</Text>
         </ScrollView>
+
       </View>
     </SafeAreaView>
   );
@@ -33,6 +37,7 @@ const styles = StyleSheet.create({
     flex: 1,
     marginTop: 30,
   },
+
 
   // Top
   top: {
@@ -78,7 +83,6 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "bold",
   },
-
   // center
   content: {
     flex: 5,

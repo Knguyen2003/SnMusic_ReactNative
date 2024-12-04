@@ -6,6 +6,7 @@ import Feed from "../screens/FeedAudioListing";
 import Library from "../screens/YourLibrary";
 import Icon from "react-native-vector-icons/Feather";
 import HomeNavi from "../navigation/Home";
+import Chatbox from "../screens/Chatbox";
 
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import Ionicons from "react-native-vector-icons/Ionicons";
@@ -64,6 +65,17 @@ const Navi = ({ navigation }) => {
             headerShown: false,
           }}
         />
+        <Tab.Screen
+          name="Chatbox"
+          component={Chatbox}
+          options={{
+            tabBarIcon: ({ color, size }) => (
+              <Ionicons name="library" color={color} size={size} />
+            ),
+            headerShown: false,
+          }}
+        />
+
       </Tab.Navigator>
     </NavigationContainer>
   );

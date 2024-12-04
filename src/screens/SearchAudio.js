@@ -56,9 +56,11 @@ import {
       setResults(searchResults);
     };
 
+
     const handleClear = () => {
       setKeyword(""); // Xóa nội dung ô tìm kiếm
     };
+
   
     const getFilteredResults = () => {
       switch (selectedCategory) {
@@ -198,6 +200,7 @@ import {
             />
             <TouchableOpacity style={styles.xView} onPress={handleClear}>
               <Text style={styles.text}>X</Text>
+
             </TouchableOpacity>
           </View>
   
