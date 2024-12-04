@@ -32,7 +32,11 @@ const HomeAudioListing = ({ navigation }) => {
   const { tops, loading3, error3 } = useSelector((state) => state.tops);
   const { songs, loading2, error2 } = useSelector((state) => state.songs);
 
+
   const displayedAlbums = albumTrend.slice(0, 10);
+  const popularArtist = artists.slice(0, 6);
+  const chart = tops.slice(0, 6);
+
 
   const showPopopularArtists = ({ item }) => {
     return (
@@ -133,7 +137,7 @@ const HomeAudioListing = ({ navigation }) => {
       content: (
         <View style={styles.ContentInside}>
           <FlatList
-            data={tops}
+            data={chart}
             keyExtractor={(item) => item.id}
             renderItem={showTops}
             horizontal={true} // thanh cuon ngang
@@ -163,7 +167,7 @@ const HomeAudioListing = ({ navigation }) => {
       content: (
         <View style={styles.ContentInside}>
           <FlatList
-            data={artists}
+            data={popularArtist}
             keyExtractor={(item) => item.id}
             renderItem={showPopopularArtists}
             horizontal={true} // thanh cuon ngang
@@ -321,7 +325,7 @@ const styles = StyleSheet.create({
   },
 
   ContentInside: {
-    height: 270,
+    height: 295,
   },
 
   // Album Trending
