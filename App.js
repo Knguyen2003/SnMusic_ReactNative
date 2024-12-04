@@ -4,6 +4,8 @@ import NaviBottom from "./src/navigation/NavigationBottomTab";
 
 import Signup from "./src/screens/Signup";
 import Home from "./src/screens/HomeAudioListing";
+import Login from "./src/screens/Login";
+
 
 import store from "./src/redux/store";
 import { Provider } from "react-redux";

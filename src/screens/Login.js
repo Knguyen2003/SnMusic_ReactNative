@@ -59,8 +59,11 @@ const Login = ({ navigation }) => {
       });
   };
 
+
+  
   return (
     <SafeAreaView style={styles.container}>
+      <Text style={{ fontSize: 30, fontWeight: "bold", marginBottom: 20 }}>Login Account</Text>
       <TextInput
         placeholder="Email"
         value={email}

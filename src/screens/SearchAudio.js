@@ -55,6 +55,12 @@ import {
       const searchResults = await searchAll(keyword);
       setResults(searchResults);
     };
+
+
+    const handleClear = () => {
+      setKeyword(""); // Xóa nội dung ô tìm kiếm
+    };
+
   
     const getFilteredResults = () => {
       switch (selectedCategory) {
@@ -185,15 +191,16 @@ import {
           <View style={[styles.searchView, focusInput && styles.focusInput]}>
             <TextInput
               style={styles.input}
-              placeholder="Search...."
+              placeholder="Search..............................................."
               value={keyword}
               onChangeText={setKeyword}
               onSubmitEditing={handleSearch} // Gọi hàm tìm kiếm khi nhấn enter
               onFocus={() => setFocusInput(true)}
               onBlur={() => setFocusInput(false)}
             />
-  <TouchableOpacity style={styles.xView}>
-              <Text style={styles.text}>x</Text>
+            <TouchableOpacity style={styles.xView} onPress={handleClear}>
+              <Text style={styles.text}>X</Text>
+
             </TouchableOpacity>
           </View>
   
