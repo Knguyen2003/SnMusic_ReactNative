@@ -14,6 +14,7 @@ import TrendingAlbumSeeAll from "../screens/TrendingAlbumSeeAll";
 import SuggestionsForYouSeeAll from "../screens/SuggestionsForYouSeeAll";
 import PopularArtistsSeeAll from "../screens/PopularArtistsSeeAll";
 import ChartsSeeAll from "../screens/ChartsSeeAll";
+import TrendAlbumDetail from "../screens/TrendAlbumDetail";
 
 import Signup from "../screens/Signup";
 import Login from "../screens/Login";
@@ -82,6 +83,11 @@ const Navi = () => {
         <Stack.Screen
           name="TrendingAlbumSeeAll"
           component={TrendingAlbumSeeAll}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="TrendAlbumDetail"
+          component={TrendAlbumDetail}
           options={{ headerShown: false }}
         />
         <Stack.Screen
