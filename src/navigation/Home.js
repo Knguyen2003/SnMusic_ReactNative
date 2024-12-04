@@ -12,6 +12,7 @@ import ArtistDetail from "../screens/ArtistDetail";
 import ChartDetail from "../screens/ChartsDetails";
 
 
+
 import Signup from "../screens/Signup";
 import Login from "../screens/Login";
 

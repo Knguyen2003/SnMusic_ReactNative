@@ -24,7 +24,7 @@ const Stack = createStackNavigator();
 const Navi = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="NaviBottom">
+      <Stack.Navigator initialRouteName="LaunchScreen">
         <Stack.Screen
           name="LaunchScreen"
           component={LaunchScreen}
@@ -38,71 +38,6 @@ const Navi = () => {
         <Stack.Screen
           name="Login"
           component={Login}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name="HomeAudioListing"
-          component={HomeAudioListing}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name="PlaylistDetail_AudioListing"
-          component={PlaylistDetail_AudioListing}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name="PlayAnAudio"
-          component={PlayAnAudio}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name="ArtistProfile"
-          component={ArtistProfile}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name="YourLibrary"
-          component={YourLibrary}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name="YourPlaylist"
-          component={YourPlaylist}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name="FeedAudioListing"
-          component={FeedAudioListing}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name="SubscriptionPlans"
-          component={SubscriptionPlans}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name="TrendingAlbumSeeAll"
-          component={TrendingAlbumSeeAll}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name="TrendAlbumDetail"
-          component={TrendAlbumDetail}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name="SuggestionsForYouSeeAll"
-          component={SuggestionsForYouSeeAll}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name="PopularArtistsSeeAll"
-          component={PopularArtistsSeeAll}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name="ChartsSeeAll"
-          component={ChartsSeeAll}
           options={{ headerShown: false }}
         />
         <Stack.Screen

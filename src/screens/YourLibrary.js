@@ -1,22 +1,26 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import {
   Text,
   StyleSheet,
   View,
   SafeAreaView,
-  ImageBackground,
   Image,
   TouchableOpacity,
-  ScrollView,
   FlatList,
+  ActivityIndicator,
 } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
-import IconMaterialCommunity from "react-native-vector-icons/MaterialCommunityIcons";
 import IconHeart from "react-native-vector-icons/AntDesign";
 import IconAntDesign from "react-native-vector-icons/AntDesign";
 import IconOctions from "react-native-vector-icons/Octicons";
 
+import { fetchSongsRequest } from "../redux/actions/songAction";
+import { useDispatch, useSelector } from "react-redux";
+
 const YourLibrary = ({ navigation }) => {
+  const dispatch = useDispatch();
+  const { songs, loading, error } = useSelector((state) => state.songs);
+
   const categoryMusic = [
     {
       id: 1,
@@ -44,14 +48,65 @@ const YourLibrary = ({ navigation }) => {
     },
   ];
 
+
   const hienThi = ({ item }) => {
     return (
       <TouchableOpacity
         style={styles.categoryMusic}
-        onPress={() => navigation.navigate("YourPlaylist")}
       >
         <Text style={styles.categoryMusicText}>{item.name}</Text>
       </TouchableOpacity>
+    );
+  };
+
+  useEffect(() => {
+    dispatch(fetchSongsRequest());
+  }, [dispatch]);
+
+  if (loading) {
+    return <ActivityIndicator size="large" color="#0000ff" />;
+  }
+
+  if (error) {
+    return (
+      <Text style={{ justifyContent: "center", alignItems: "center" }}>
+        Error: {error}
+      </Text>
+    );
+  }
+
+  const showSongs = ({ item }) => {
+    return (
+        <View style={styles.song}>
+        <TouchableOpacity style={styles.detailListSong}
+                          onPress={() =>
+                            navigation.navigate("PlayAnAudio", { song: item, ds : songs })
+                          }
+        >
+          <Image
+            source={{ uri: item.image }}
+            style={styles.imageSong}
+          ></Image>
+          <View style={styles.detailSong}>
+            <Text style={styles.titleSong}>{item.name}</Text>
+            <Text style={styles.nameSingerSing}>{item.singer}</Text>
+            <View style={styles.detailContentSong}>
+              <IconAntDesign name="caretright" size={16} color="gray" />
+              <Text style={styles.countViewSong}>68M</Text>
+              <IconOctions name="dot-fill" size={16} color="gray" />
+              <Text style={styles.timeSong}>03:35</Text>
+            </View>
+          </View>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.heartSong}>
+          <IconHeart
+            name="heart"
+            size={20}
+            color="violet"
+            style={styles.distance}
+          />
+        </TouchableOpacity>
+      </View>
     );
   };
 
@@ -79,205 +134,11 @@ const YourLibrary = ({ navigation }) => {
 
       {/* Footer */}
       <View style={styles.footer}>
-        <ScrollView
-          style={styles.scrollView}
-          showsVerticalScrollIndicator={false}
-        >
-          {/* Account Artist */}
-          <View style={styles.song}>
-            <TouchableOpacity style={styles.detailListSong}>
-              <Image
-                source={require("../../assets/images/YourLibrary/merwatson.png")}
-                style={styles.imageSong}
-              ></Image>
-              <View style={styles.accountArtist}>
-                <Text style={styles.nameSinger}>Mer Watson</Text>
-                <View style={styles.detailAccountArtist}>
-                  <IconMaterialCommunity
-                    name="account-outline"
-                    size={16}
-                    color="gray"
-                  />
-                  <Text style={styles.countFollow}>1.234K</Text>
-                  <Text style={styles.follow}>Followers</Text>
-                </View>
-              </View>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.buttonFollow}>
-              <Text style={styles.textFollow}>Follow</Text>
-            </TouchableOpacity>
-          </View>
-
-          {/* List Song */}
-          {/* Song 01 */}
-          <View style={styles.song}>
-            <TouchableOpacity
-              style={styles.detailListSong}
-              onPress={() => navigation.navigate("PlayAnAudio")}
-            >
-              <Image
-                source={require("../../assets/images/YourLibrary/song01.png")}
-                style={styles.imageSong}
-              ></Image>
-              <View style={styles.detailSong}>
-                <Text style={styles.titleSong}>FLOWER</Text>
-                <Text style={styles.nameSingerSing}>Jessica Gonzalez</Text>
-                <View style={styles.detailContentSong}>
-                  <IconAntDesign name="caretright" size={16} color="gray" />
-                  <Text style={styles.countViewSong}>2.1M</Text>
-                  <IconOctions name="dot-fill" size={16} color="gray" />
-                  <Text style={styles.timeSong}>3:36</Text>
-                </View>
-              </View>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.heartSong}>
-              <IconHeart
-                name="heart"
-                size={20}
-                color="violet"
-                style={styles.distance}
-              />
-            </TouchableOpacity>
-          </View>
-
-          {/* Song 02 */}
-          <View style={styles.song}>
-            <TouchableOpacity style={styles.detailListSong}>
-              <Image
-                source={require("../../assets/images/YourLibrary/song02.png")}
-                style={styles.imageSong}
-              ></Image>
-              <View style={styles.detailSong}>
-                <Text style={styles.titleSong}>Sape of You</Text>
-                <Text style={styles.nameSingerSing}>Anthony Taylor</Text>
-                <View style={styles.detailContentSong}>
-                  <IconAntDesign name="caretright" size={16} color="gray" />
-                  <Text style={styles.countViewSong}>68M</Text>
-                  <IconOctions name="dot-fill" size={16} color="gray" />
-                  <Text style={styles.timeSong}>03:35</Text>
-                </View>
-              </View>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.heartSong}>
-              <IconHeart
-                name="heart"
-                size={20}
-                color="violet"
-                style={styles.distance}
-              />
-            </TouchableOpacity>
-          </View>
-
-          {/* Song 03 */}
-          <View style={styles.song}>
-            <TouchableOpacity style={styles.detailListSong}>
-              <Image
-                source={require("../../assets/images/YourLibrary/song03.png")}
-                style={styles.imageSong}
-              ></Image>
-              <View style={styles.detailSong}>
-                <Text style={styles.titleSong}>Blingding Lights</Text>
-                <View style={styles.detailContentSong}>
-                  <Text style={styles.countViewSongBling}>Ashley Scott</Text>
-                  <IconOctions name="dot-fill" size={16} color="gray" />
-                  <Text style={styles.timeSongBling}>4 songs</Text>
-                </View>
-              </View>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.heartSong}>
-              <IconAntDesign
-                name="right"
-                size={20}
-                color="black"
-                style={styles.distance}
-              />
-            </TouchableOpacity>
-          </View>
-
-          {/* Song 04 */}
-          <View style={styles.song}>
-            <TouchableOpacity style={styles.detailListSong}>
-              <Image
-                source={require("../../assets/images/YourLibrary/song04.png")}
-                style={styles.imageSong}
-              ></Image>
-              <View style={styles.detailSong}>
-                <Text style={styles.titleSong}>Levitating</Text>
-                <Text style={styles.nameSingerSing}>Anthony Taylor</Text>
-                <View style={styles.detailContentSong}>
-                  <IconAntDesign name="caretright" size={16} color="gray" />
-                  <Text style={styles.countViewSong}>9M</Text>
-                  <IconOctions name="dot-fill" size={16} color="gray" />
-                  <Text style={styles.timeSong}>07:48</Text>
-                </View>
-              </View>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.heartSong}>
-              <IconHeart
-                name="heart"
-                size={20}
-                color="violet"
-                style={styles.distance}
-              />
-            </TouchableOpacity>
-          </View>
-
-          {/* Song 05 */}
-          <View style={styles.song}>
-            <TouchableOpacity style={styles.detailListSong}>
-              <Image
-                source={require("../../assets/images/YourLibrary/song05.png")}
-                style={styles.imageSong}
-              ></Image>
-              <View style={styles.detailSong}>
-                <Text style={styles.titleSong}>Astronaut in the Ocean</Text>
-                <Text style={styles.nameSingerSing}>Pedro Moreno</Text>
-                <View style={styles.detailContentSong}>
-                  <IconAntDesign name="caretright" size={16} color="gray" />
-                  <Text style={styles.countViewSong}>23M</Text>
-                  <IconOctions name="dot-fill" size={16} color="gray" />
-                  <Text style={styles.timeSong}>3:36</Text>
-                </View>
-              </View>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.heartSong}>
-              <IconHeart
-                name="heart"
-                size={20}
-                color="violet"
-                style={styles.distance}
-              />
-            </TouchableOpacity>
-          </View>
-
-          {/* Song 06 */}
-          <View style={styles.song}>
-            <TouchableOpacity style={styles.detailListSong}>
-              <Image
-                source={require("../../assets/images/YourLibrary/song06.png")}
-                style={styles.imageSong}
-              ></Image>
-              <View style={styles.detailSong}>
-                <Text style={styles.titleSong}>Dynamite</Text>
-                <Text style={styles.nameSingerSing}>Elena Jimenez</Text>
-                <View style={styles.detailContentSong}>
-                  <IconAntDesign name="caretright" size={16} color="gray" />
-                  <Text style={styles.countViewSong}>10M</Text>
-                  <IconOctions name="dot-fill" size={16} color="gray" />
-                  <Text style={styles.timeSong}>06:22</Text>
-                </View>
-              </View>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.heartSong}>
-              <IconHeart
-                name="heart"
-                size={20}
-                color="violet"
-                style={styles.distance}
-              />
-            </TouchableOpacity>
-          </View>
-        </ScrollView>
+      <FlatList
+            data={songs}
+            keyExtractor={(item) => item.id}
+            renderItem={showSongs}
+       />
       </View>
     </SafeAreaView>
   );
