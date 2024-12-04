@@ -43,6 +43,19 @@ export default function SearchAudio() {
   const [focusInput, setFocusInput] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState(1);
 
+
+  const [keyword, setKeyword] = useState("");
+  const [results, setResults] = useState({
+    albums: [],
+    songs: [],
+    artists: [],
+  });
+
+  const handleSearch = async () => {
+    const searchResults = await searchAll(keyword);
+    setResults(searchResults);
+  };
+
   const hienThi = ({ item }) => {
     return (
       <TouchableOpacity
@@ -67,6 +80,9 @@ export default function SearchAudio() {
           <TextInput
             style={styles.input}
             placeholder="Search...."
+            value={keyword}
+            onChangeText={setKeyword}
+            onSubmitEditing={handleSearch}
             onFocus={() => setFocusInput(true)}
             onBlur={() => setFocusInput(false)}
           />
@@ -76,23 +92,22 @@ export default function SearchAudio() {
         </View>
 
         {/* Header */}
-      <View style={styles.header}>
-        <View style={styles.headerCategory}>
-          <FlatList
-            data={categoryMusic}
-            keyExtractor={(item) => item.name.toString()}
-            renderItem={hienThi}
-            horizontal={true}
-            showsHorizontalScrollIndicator={false}
-          />
+
+        <View style={styles.header}>
+          <View style={styles.headerCategory}>
+            <FlatList
+              data={categoryMusic}
+              keyExtractor={(item) => item.name.toString()}
+              renderItem={hienThi}
+              horizontal={true}
+              showsHorizontalScrollIndicator={false}
+            />
+          </View>
         </View>
       </View>
-      </View>
-
 
       <View style={styles.content}>
-
-      <ScrollView
+        <ScrollView
           style={styles.scrollView}
           showsVerticalScrollIndicator={false}
         >
@@ -319,6 +334,7 @@ const styles = StyleSheet.create({
     borderRadius: 40,
     borderWidth: 0.5,
     marginTop:25,
+
   },
   xView: {
     backgroundColor: "black",
