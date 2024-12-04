@@ -14,6 +14,8 @@ import {
 } from "react-native";
 import { getChatGPTResponse } from "../component/chatGPT";
 import { supabase } from "../component/supabaseClient";
+import Ionicons from "react-native-vector-icons/Ionicons";
+
 
 const ChatScreen = () => {
   const [userMessage, setUserMessage] = useState("");

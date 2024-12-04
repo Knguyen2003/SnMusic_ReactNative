@@ -10,12 +10,13 @@ import Chatbox from "../screens/Chatbox";
 
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import Ionicons from "react-native-vector-icons/Ionicons";
+import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
+
 
 const Tab = createBottomTabNavigator();
 
 const Navi = ({ navigation }) => {
   return (
-    <NavigationContainer>
       <Tab.Navigator
         initialRouteName="Home"
         screenOptions={{
@@ -24,7 +25,7 @@ const Navi = ({ navigation }) => {
         }}
       >
         <Tab.Screen
-          name="HomeNavi"
+          name="Home"
           component={HomeNavi}
           options={{
             tabBarIcon: ({ color, size }) => (
@@ -70,14 +71,13 @@ const Navi = ({ navigation }) => {
           component={Chatbox}
           options={{
             tabBarIcon: ({ color, size }) => (
-              <Ionicons name="library" color={color} size={size} />
+              <FontAwesome5 name="robot" color={color} size={size} />
             ),
             headerShown: false,
           }}
         />
 
       </Tab.Navigator>
-    </NavigationContainer>
   );
 };
 export default Navi;
