@@ -8,7 +8,9 @@ import PopularArtistsSeeAll from "../screens/PopularArtistsSeeAll";
 import ChartsSeeAll from "../screens/ChartsSeeAll";
 import TrendAlbumDetail from "../screens/TrendAlbumDetail";
 import PlayAnAudio from "../screens/PlayAnAudio";
+import ArtistDetail from "../screens/ArtistDetail";
 import ChartDetail from "../screens/ChartsDetails";
+
 
 import Signup from "../screens/Signup";
 import Login from "../screens/Login";
@@ -46,6 +48,11 @@ const Navi = () => {
       <Stack.Screen
         name="PopularArtistsSeeAll"
         component={PopularArtistsSeeAll}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="ArtistDetail"
+        component={ArtistDetail}
         options={{ headerShown: false }}
       />
       <Stack.Screen

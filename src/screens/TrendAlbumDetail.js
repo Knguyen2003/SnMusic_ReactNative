@@ -52,7 +52,9 @@ const TrendAlbumDetail = ({ navigation, route }) => {
     return (
       <TouchableOpacity
         style={styles.songView}
-        onPress={() => navigation.navigate("PlayAnAudio", { song: item })}
+        onPress={() =>
+          navigation.navigate("PlayAnAudio", { song: item, ds: songByAlbum })
+        }
       >
         <View style={{ flexDirection: "row" }}>
           <Image
@@ -89,6 +91,7 @@ const TrendAlbumDetail = ({ navigation, route }) => {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.top}>
+
          <Image
             source={{ uri: album.image }}
             style={styles.imageTop}

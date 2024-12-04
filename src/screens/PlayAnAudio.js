@@ -23,9 +23,13 @@ const PlayAnAudio = ({ navigation, route }) => {
   const { song, ds } = route.params;
 
   const [sound, setSound] = useState(null);
-  const [isPlaying, setIsPlaying] = useState(true);
 
-  // useEffect to automatically play the sound when the component mounts
+  const [isPlaying, setIsPlaying] = useState(true);
+  const [currentSongIndex, setCurrentSongIndex] = useState(
+    ds.findIndex((s) => s.id === song.id)
+  );
+
+  // Phát nhạc
   useEffect(() => {
     const playAudio = async () => {
       const { sound: newSound } = await Audio.Sound.createAsync(
@@ -45,25 +49,42 @@ const PlayAnAudio = ({ navigation, route }) => {
     };
   }, [song]); // Thực hiện lại nếu song thay đổi
 
-  const playSound = async (uri) => {
+  const nextSong = async () => {
+    const nextIndex = (currentSongIndex + 1) % ds.length;
+    setCurrentSongIndex(nextIndex);
+    if (sound) {
+      await sound.unloadAsync();
+    }
+    const { sound: newSound } = await Audio.Sound.createAsync(
+      { uri: ds[nextIndex].file_url },
+      { shouldPlay: true }
+    );
+    setSound(newSound);
+    setIsPlaying(true);
+  };
+
+  // Hàm chuyển bài hát trước
+  const prevSong = async () => {
+    const prevIndex = (currentSongIndex - 1 + ds.length) % ds.length;
+    setCurrentSongIndex(prevIndex);
+    if (sound) {
+      await sound.unloadAsync();
+    }
+    const { sound: newSound } = await Audio.Sound.createAsync(
+      { uri: ds[prevIndex].file_url },
+      { shouldPlay: true }
+    );
+    setSound(newSound);
+    setIsPlaying(true);
+  };
+
+  const playSound = async () => {
     if (isPlaying) {
-      // Nếu nhạc đang phát, dừng nhạc
       await sound.pauseAsync();
       setIsPlaying(false);
     } else {
-      if (!sound) {
-        // Nếu chưa có instance âm thanh, tạo mới và phát
-        const { sound: newSound } = await Audio.Sound.createAsync(
-          { uri },
-          { shouldPlay: true }
-        );
-        setSound(newSound); // Lưu lại instance của âm thanh
-        setIsPlaying(true); // Đặt trạng thái là đang phát
-      } else {
-        // Nếu sound đã tồn tại, tiếp tục phát nhạc mà không tạo mới
-        await sound.playAsync();
-        setIsPlaying(true); // Đặt trạng thái là đang phát
-      }
+      await sound.playAsync();
+      setIsPlaying(true);
     }
   };
 
@@ -91,10 +112,13 @@ const PlayAnAudio = ({ navigation, route }) => {
         {/* footer */}
         <View style={styles.footer}>
           <View style={styles.centerHeader}>
-            <Text style={styles.songTitle}>{song.name}</Text>
+            <Text style={styles.songTitle}>{ds[currentSongIndex].name}</Text>
             <Text style={styles.artistName}>
-              {song.artists && song.artists.length > 0
-                ? song.artists.map((artist) => artist.name).join(", ")
+              {ds[currentSongIndex].artists &&
+              ds[currentSongIndex].artists.length > 0
+                ? ds[currentSongIndex].artists
+                    .map((artist) => artist.name)
+                    .join(", ")
                 : "Unknown Artist"}
             </Text>
           </View>
@@ -110,7 +134,9 @@ const PlayAnAudio = ({ navigation, route }) => {
 
           <View style={styles.centerFooter}>
             <IconFontAwesome name="random" size={25} color="white" />
-            <AntDesign name="stepbackward" size={26} color="white" />
+            <TouchableOpacity onPress={prevSong}>
+              <AntDesign name="stepbackward" size={26} color="white" />
+            </TouchableOpacity>
             <TouchableOpacity onPress={() => playSound(song.file_url)}>
               <FontAwesome
                 name={isPlaying ? "pause" : "play"}
@@ -118,7 +144,9 @@ const PlayAnAudio = ({ navigation, route }) => {
                 color="#ffffff"
               />
             </TouchableOpacity>
-            <AntDesign name="stepforward" size={26} color="white" />
+            <TouchableOpacity onPress={nextSong}>
+              <AntDesign name="stepforward" size={26} color="white" />
+            </TouchableOpacity>
             <IconEntypo
               name="dots-three-horizontal"
               size={25}

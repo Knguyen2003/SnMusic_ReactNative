@@ -33,7 +33,6 @@ const HomeAudioListing = ({ navigation }) => {
   const { tops, loading3, error3 } = useSelector((state) => state.tops);
   const { songs, loading2, error2 } = useSelector((state) => state.songs);
 
-
   const displayedAlbums = albumTrend.slice(0, 10);
   const popularArtist = artists.slice(0, 6);
   const chart = tops.slice(0, 6);
@@ -46,21 +45,25 @@ const HomeAudioListing = ({ navigation }) => {
     }));
   };
 
-
   const showPopopularArtists = ({ item }) => {
     const isFollowed = followedArtists[item.id] || false; // Kiểm tra trạng thái Follow
     return (
-      <TouchableOpacity style={styles.popular}>
+      <TouchableOpacity
+        style={styles.popular}
+        onPress={() => navigation.navigate("TrendAlbumDetail", { album: item })}
+      >
         <Image source={{ uri: item.image }} style={styles.imageSingerP} />
         <Text style={styles.nameSingerP}>{item.name}</Text>
-        <TouchableOpacity 
-            style={[
-              styles.buttonFollow,
-              { backgroundColor: isFollowed ? "gray" : "blue" }, // Đổi màu nút
-            ]}
-            onPress={() => handleFollowToggle(item.id)}
+        <TouchableOpacity
+          style={[
+            styles.buttonFollow,
+            { backgroundColor: isFollowed ? "gray" : "blue" }, // Đổi màu nút
+          ]}
+          onPress={() => handleFollowToggle(item.id)}
         >
-          <Text style={styles.textFollow}>{isFollowed ? "UnFollow" : "Follow"} {/* Đổi text */}</Text>
+          <Text style={styles.textFollow}>
+            {isFollowed ? "UnFollow" : "Follow"} {/* Đổi text */}
+          </Text>
         </TouchableOpacity>
       </TouchableOpacity>
     );
@@ -72,7 +75,8 @@ const HomeAudioListing = ({ navigation }) => {
         <TouchableOpacity
           style={styles.album}
           onPress={() =>
-            navigation.navigate("TrendAlbumDetail", { album: item})
+            navigation.navigate("TrendAlbumDetail", { album: item })
+
           }
         >
           <View>
@@ -103,7 +107,12 @@ const HomeAudioListing = ({ navigation }) => {
 
   const showSongs = ({ item }) => {
     return (
-      <TouchableOpacity style={styles.suggestion}>
+      <TouchableOpacity
+        style={styles.suggestion}
+        onPress={() =>
+          navigation.navigate("PlayAnAudio", { song: item, ds: songs })
+        }
+      >
         <ImageBackground
           source={{ uri: item.image }}
           style={styles.imageSuggest}
