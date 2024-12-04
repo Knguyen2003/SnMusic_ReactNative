@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   Text,
   StyleSheet,
@@ -11,12 +11,67 @@ import {
 import Icon from "react-native-vector-icons/Ionicons";
 import IconEntypo from "react-native-vector-icons/Entypo";
 import IconFontAwesome from "react-native-vector-icons/FontAwesome";
+import FontAwesome from "react-native-vector-icons/FontAwesome";
 import AntDesign from "react-native-vector-icons/AntDesign";
 import IconHeart from "react-native-vector-icons/Feather";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import IconAntDesign from "react-native-vector-icons/AntDesign";
 
-const PlayAnAudio = ({ navigation }) => {
+import { Audio } from "expo-av";
+
+const PlayAnAudio = ({ navigation, route }) => {
+  const { song } = route.params;
+
+  const [sound, setSound] = useState(null);
+  const [isPlaying, setIsPlaying] = useState(true);
+
+  // useEffect to automatically play the sound when the component mounts
+  useEffect(() => {
+    const playAudio = async () => {
+      const { sound: newSound } = await Audio.Sound.createAsync(
+        { uri: song.file_url },
+        { shouldPlay: true }
+      );
+      setSound(newSound);
+      setIsPlaying(true); // Đặt trạng thái là đang phát
+    };
+
+    playAudio();
+
+    return () => {
+      if (sound) {
+        sound.unloadAsync(); // Giải phóng tài nguyên âm thanh khi component unmount
+      }
+    };
+  }, [song]); // Thực hiện lại nếu song thay đổi
+
+  const playSound = async (uri) => {
+    if (isPlaying) {
+      // Nếu nhạc đang phát, dừng nhạc
+      await sound.pauseAsync();
+      setIsPlaying(false);
+    } else {
+      if (!sound) {
+        // Nếu chưa có instance âm thanh, tạo mới và phát
+        const { sound: newSound } = await Audio.Sound.createAsync(
+          { uri },
+          { shouldPlay: true }
+        );
+        setSound(newSound); // Lưu lại instance của âm thanh
+        setIsPlaying(true); // Đặt trạng thái là đang phát
+      } else {
+        // Nếu sound đã tồn tại, tiếp tục phát nhạc mà không tạo mới
+        await sound.playAsync();
+        setIsPlaying(true); // Đặt trạng thái là đang phát
+      }
+    }
+  };
+
+  const navi = () => {
+    navigation.setParams({ data: song });
+    navigation.goBack();
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <ImageBackground
@@ -26,7 +81,7 @@ const PlayAnAudio = ({ navigation }) => {
         {/* Header */}
         <View style={styles.header}>
           <Text style={styles.playText}>Play</Text>
-          <TouchableOpacity onPress={() => navigation.navigate("NaviBottom")}>
+          <TouchableOpacity onPress={navi}>
             <Icon name="chevron-down" size={26} color="white" />
           </TouchableOpacity>
         </View>
@@ -36,8 +91,12 @@ const PlayAnAudio = ({ navigation }) => {
         {/* footer */}
         <View style={styles.footer}>
           <View style={styles.centerHeader}>
-            <Text style={styles.songTitle}>FLOWER</Text>
-            <Text style={styles.artistName}>Jessica Gonzalez</Text>
+            <Text style={styles.songTitle}>{song.name}</Text>
+            <Text style={styles.artistName}>
+              {song.artists && song.artists.length > 0
+                ? song.artists.map((artist) => artist.name).join(", ")
+                : "Unknown Artist"}
+            </Text>
           </View>
 
           <Image
@@ -52,10 +111,13 @@ const PlayAnAudio = ({ navigation }) => {
           <View style={styles.centerFooter}>
             <IconFontAwesome name="random" size={25} color="white" />
             <AntDesign name="stepbackward" size={26} color="white" />
-            <Image
-              source={require("../../assets/images/PlayAnAudio/image03.png")}
-              style={styles.image03}
-            />
+            <TouchableOpacity onPress={() => playSound(song.file_url)}>
+              <FontAwesome
+                name={isPlaying ? "pause" : "play"}
+                size={30}
+                color="#ffffff"
+              />
+            </TouchableOpacity>
             <AntDesign name="stepforward" size={26} color="white" />
             <IconEntypo
               name="dots-three-horizontal"
@@ -94,6 +156,7 @@ const styles = StyleSheet.create({
   image01: {
     width: "100%",
     height: "100%",
+    resizeMode: "contain",
   },
 
   //-----Header-----
