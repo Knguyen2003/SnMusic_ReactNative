@@ -6,6 +6,7 @@ import artistsReducer from "./reducers/artistReducer";
 import albumTrendReducer from "./reducers/trendingAlbumReducer";
 import topsReducer from "./reducers/topReducer";
 import songsReducer from "./reducers/songReducer";
+import songByAlbumsReducer from "./reducers/songAlbumReducer";
 
 import rootSaga from "./sagas/rootSaga";
 
@@ -18,8 +19,9 @@ const store = configureStore({
     albumTrend: albumTrendReducer,
     tops: topsReducer,
     songs: songsReducer,
+    songByAlbum: songByAlbumsReducer,
   },
-  
+
   // Sử dụng callback để cấu hình middleware
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(sagaMiddleware),
