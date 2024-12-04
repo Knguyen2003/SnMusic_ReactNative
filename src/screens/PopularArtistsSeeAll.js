@@ -34,7 +34,8 @@ const PopularArtistsSeeAll = ({ navigation }) => {
           style={styles.imageSingerP}
         />
         <Text style={styles.nameSingerP}>{item.name}</Text>
-        <TouchableOpacity style={styles.buttonFollow}>
+        <TouchableOpacity style={styles.buttonFollow}
+        >
             <Text style={styles.textFollow}>Follow</Text>
         </TouchableOpacity>
       </TouchableOpacity>
@@ -82,6 +83,7 @@ const styles = StyleSheet.create({
     padding: 10,
     paddingBottom: 0,
     marginTop: 30,
+    marginBottom:50,
   },
 
   //-----content-----
