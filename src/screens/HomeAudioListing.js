@@ -76,6 +76,7 @@ const HomeAudioListing = ({ navigation }) => {
           style={styles.album}
           onPress={() =>
             navigation.navigate("TrendAlbumDetail", { album: item })
+
           }
         >
           <View>
@@ -95,7 +96,9 @@ const HomeAudioListing = ({ navigation }) => {
 
   const showTops = ({ item }) => {
     return (
-      <TouchableOpacity style={styles.chart}>
+      <TouchableOpacity style={styles.chart} onPress={() =>
+        navigation.navigate("ChartDetail", { top: item})
+      }>
         <Image source={{ uri: item.image }} style={styles.imageTop} />
         <Text style={styles.textNameAB}>{item.name}</Text>
       </TouchableOpacity>
