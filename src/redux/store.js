@@ -7,6 +7,7 @@ import albumTrendReducer from "./reducers/trendingAlbumReducer";
 import topsReducer from "./reducers/topReducer";
 import songsReducer from "./reducers/songReducer";
 import songByAlbumsReducer from "./reducers/songAlbumReducer";
+import songByTopsReducer from "./reducers/songTopReducer";
 
 import rootSaga from "./sagas/rootSaga";
 
@@ -20,6 +21,7 @@ const store = configureStore({
     tops: topsReducer,
     songs: songsReducer,
     songByAlbum: songByAlbumsReducer,
+    songByTop : songByTopsReducer,
   },
 
   // Sử dụng callback để cấu hình middleware

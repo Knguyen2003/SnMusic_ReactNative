@@ -20,7 +20,7 @@ import IconAntDesign from "react-native-vector-icons/AntDesign";
 import { Audio } from "expo-av";
 
 const PlayAnAudio = ({ navigation, route }) => {
-  const { song } = route.params;
+  const { song, ds } = route.params;
 
   const [sound, setSound] = useState(null);
   const [isPlaying, setIsPlaying] = useState(true);
