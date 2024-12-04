@@ -17,17 +17,17 @@ import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 
 import { useDispatch, useSelector } from "react-redux";
 
-import { fetchSongByAlbumRequest } from "../redux/actions/albumSongAction";
+import { fetchSongByTopRequest } from "../redux/actions/topSongAction";
 
-const TrendAlbumDetail = ({ navigation, route }) => {
+const ChartDetail = ({ navigation, route }) => {
   const dispatch = useDispatch();
-  const { songByAlbum, loading, error } = useSelector(
-    (state) => state.songByAlbum
+  const { songByTop, loading, error } = useSelector(
+    (state) => state.songByTop
   );
-  const { album } = route.params;
+  const { top } = route.params;
 
   useEffect(() => {
-    dispatch(fetchSongByAlbumRequest(album.id));
+    dispatch(fetchSongByTopRequest(top.id));
   }, [dispatch]);
 
   if (loading) {
@@ -52,9 +52,7 @@ const TrendAlbumDetail = ({ navigation, route }) => {
     return (
       <TouchableOpacity
         style={styles.songView}
-        onPress={() =>
-          navigation.navigate("PlayAnAudio", { song: item, ds: songByAlbum })
-        }
+        onPress={() => navigation.navigate("PlayAnAudio", { song: item, ds : songByTop })}
       >
         <View style={{ flexDirection: "row" }}>
           <Image
@@ -87,20 +85,21 @@ const TrendAlbumDetail = ({ navigation, route }) => {
       </TouchableOpacity>
     );
   };
+  console.log(songByTop);
+  console.log(top);
 
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.top}>
-
          <Image
-            source={{ uri: album.image }}
+            source={{ uri: top.image }}
             style={styles.imageTop}
           />
-          <Text  style={styles.nameAlbum}>{album.nameAlbum}</Text>
+          <Text  style={styles.nameAlbum}>{top.name}</Text>
       </View>
       <View style={styles.content}>
         <FlatList
-          data={songByAlbum}
+          data={songByTop}
           keyExtractor={(item, index) => index.toString()}
           renderItem={showSongs}
         />
@@ -160,4 +159,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default TrendAlbumDetail;
+export default ChartDetail;
