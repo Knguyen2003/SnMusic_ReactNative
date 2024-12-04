@@ -9,7 +9,7 @@ import { supabase } from "../../component/supabaseClient";
 function* fetchTopsSaga() {
   try {
     const { data, error } = yield call(() =>
-      supabase.from("Top50Region").select("*")
+      supabase.from("top").select("*")
     );
     if (error) throw error;
     yield put(fetchTopsSuccess(data));
