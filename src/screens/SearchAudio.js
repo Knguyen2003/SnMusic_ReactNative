@@ -17,6 +17,7 @@ import IconOctions from "react-native-vector-icons/Octicons";
 import React, { useState } from "react";
 
 export default function SearchAudio() {
+
   const categoryMusic = [
     {
       id: 1,
@@ -42,6 +43,7 @@ export default function SearchAudio() {
   const [focusInput, setFocusInput] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState(1);
 
+
   const [keyword, setKeyword] = useState("");
   const [results, setResults] = useState({
     albums: [],
@@ -63,14 +65,10 @@ export default function SearchAudio() {
         ]}
         onPress={() => setSelectedCategory(item.id)} // Thay đổi trạng thái khi nhấn
       >
-        <Text
-          style={[
+        <Text style={[
             styles.categoryMusicText,
             selectedCategory === item.id && styles.categoryTextSelected, // Đổi màu chữ khi mục được chọn
-          ]}
-        >
-          {item.name}
-        </Text>
+          ]}>{item.name}</Text>
       </TouchableOpacity>
     );
   };
@@ -94,6 +92,7 @@ export default function SearchAudio() {
         </View>
 
         {/* Header */}
+
         <View style={styles.header}>
           <View style={styles.headerCategory}>
             <FlatList
@@ -334,7 +333,8 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     borderRadius: 40,
     borderWidth: 0.5,
-    marginTop: 25,
+    marginTop:25,
+
   },
   xView: {
     backgroundColor: "black",
