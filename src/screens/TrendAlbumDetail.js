@@ -24,10 +24,10 @@ const TrendAlbumDetail = ({ navigation, route }) => {
   const { songByAlbum, loading, error } = useSelector(
     (state) => state.songByAlbum
   );
-  const { id } = route.params;
+  const { album } = route.params;
 
   useEffect(() => {
-    dispatch(fetchSongByAlbumRequest(id));
+    dispatch(fetchSongByAlbumRequest(album.id));
   }, [dispatch]);
 
   if (loading) {
@@ -52,7 +52,9 @@ const TrendAlbumDetail = ({ navigation, route }) => {
     return (
       <TouchableOpacity
         style={styles.songView}
-        onPress={() => navigation.navigate("PlayAnAudio", { song: item })}
+        onPress={() =>
+          navigation.navigate("PlayAnAudio", { song: item, ds: songByAlbum })
+        }
       >
         <View style={{ flexDirection: "row" }}>
           <Image
@@ -89,7 +91,11 @@ const TrendAlbumDetail = ({ navigation, route }) => {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.top}>
-        <Text>Xin chao ạ</Text>
+        <Image
+          source={{ uri: album.image }}
+          style={{ width: 50, height: 50, marginRight: 10 }}
+        />
+        <Text>{album.nameAlbum}</Text>
       </View>
       <View style={styles.content}>
         <FlatList
