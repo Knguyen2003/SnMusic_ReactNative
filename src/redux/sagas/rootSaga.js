@@ -4,7 +4,14 @@ import { watchFetchArtists } from "./artistSaga";
 import { watchFetchAlbumTrending } from "./trendingAlbumSaga";
 import { watchFetchTops } from "./topSaga";
 import { watchFetchSongs } from "./songSaga";
+import { watchFetchSongAlbums } from "./songAlbumSaga";
 
 export default function* rootSaga() {
-  yield all([watchFetchArtists(), watchFetchTops(), watchFetchSongs(),watchFetchAlbumTrending()]);
+  yield all([
+    watchFetchArtists(),
+    watchFetchTops(),
+    watchFetchSongs(),
+    watchFetchAlbumTrending(),
+    watchFetchSongAlbums(),
+  ]);
 }

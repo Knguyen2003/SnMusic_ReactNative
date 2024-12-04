@@ -21,29 +21,26 @@ import { fetchAlbumTrenRequest } from "../redux/actions/trendingAlbumAction";
 import { fetchTopsRequest } from "../redux/actions/topAction";
 import { fetchSongsRequest } from "../redux/actions/songAction";
 
-
 const HomeAudioListing = ({ navigation }) => {
   const [searchQuery, setSearchQuery] = useState("");
 
   const dispatch = useDispatch();
   const { artists, loading, error } = useSelector((state) => state.artists);
-  const { albumTrend, loading1, error1 } = useSelector((state) => state.albumTrend);
+  const { albumTrend, loading1, error1 } = useSelector(
+    (state) => state.albumTrend
+  );
   const { tops, loading3, error3 } = useSelector((state) => state.tops);
   const { songs, loading2, error2 } = useSelector((state) => state.songs);
 
-  const displayedAlbums = albumTrend.slice(0, 6);
-
+  const displayedAlbums = albumTrend.slice(0, 10);
 
   const showPopopularArtists = ({ item }) => {
     return (
       <TouchableOpacity style={styles.popular}>
-        <Image
-          source={{ uri: item.image }}
-          style={styles.imageSingerP}
-        />
+        <Image source={{ uri: item.image }} style={styles.imageSingerP} />
         <Text style={styles.nameSingerP}>{item.name}</Text>
         <TouchableOpacity style={styles.buttonFollow}>
-            <Text style={styles.textFollow}>Follow</Text>
+          <Text style={styles.textFollow}>Follow</Text>
         </TouchableOpacity>
       </TouchableOpacity>
     );
@@ -52,37 +49,35 @@ const HomeAudioListing = ({ navigation }) => {
   const showAlbumTrending = ({ item }) => {
     return (
       <View style={styles.containerAlbum}>
-        <TouchableOpacity style={styles.album}>
-        <View>
-          <Image
-            source={{ uri: item.image }}
-            style={styles.imageAlbum}
-          />
-        </View>
-
-        <View style={styles.containerAlbum}>
+        <TouchableOpacity
+          style={styles.album}
+          onPress={() =>
+            navigation.navigate("TrendAlbumDetail", { id: item.id })
+          }
+        >
           <View>
-            <Text style={styles.textNameAB}>{item.nameAlbum}</Text>
-            <Text style={styles.textNameSG}>{item.nameSinger}</Text>
+            <Image source={{ uri: item.image }} style={styles.imageAlbum} />
           </View>
-        </View>
-      </TouchableOpacity>  
+
+          <View style={styles.containerAlbum}>
+            <View>
+              <Text style={styles.textNameAB}>{item.nameAlbum}</Text>
+              <Text style={styles.textNameSG}>{item.nameSinger}</Text>
+            </View>
+          </View>
+        </TouchableOpacity>
       </View>
     );
-  };  
+  };
 
   const showTops = ({ item }) => {
     return (
       <TouchableOpacity style={styles.chart}>
-        <Image
-          source={{ uri: item.image }}
-          style={styles.imageTop}
-        />
+        <Image source={{ uri: item.image }} style={styles.imageTop} />
         <Text style={styles.textNameAB}>{item.name}</Text>
       </TouchableOpacity>
     );
   };
-
 
   const showSongs = ({ item }) => {
     return (
@@ -91,9 +86,9 @@ const HomeAudioListing = ({ navigation }) => {
           source={{ uri: item.image }}
           style={styles.imageSuggest}
         >
-        <View style={styles.viewSuggest}>
+          <View style={styles.viewSuggest}>
             <Text style={styles.textSuggest}>{item.name}</Text>
-        </View>
+          </View>
         </ImageBackground>
       </TouchableOpacity>
     );
@@ -152,7 +147,7 @@ const HomeAudioListing = ({ navigation }) => {
       title: "Trending albums",
       content: (
         <View style={styles.ContentInside}>
-           <FlatList
+          <FlatList
             data={displayedAlbums}
             keyExtractor={(item) => item.id}
             renderItem={showAlbumTrending}
@@ -225,25 +220,26 @@ const HomeAudioListing = ({ navigation }) => {
       </View>
 
       {/* center */}
-        <View style={styles.content}>
-          <FlatList
-            data={sections}
-            keyExtractor={(item, index) => index.toString()}
-            renderItem={({ item }) => (
-              <View style={styles.section}>
-                <View style={styles.titileContent}>
-                  <Text style={styles.textTitle}>{item.title}</Text>
-                  <TouchableOpacity onPress={() => navigation.navigate(item.screen)}>
-                    <Text style={styles.textSeeAll}>See all</Text>
-                  </TouchableOpacity>
-                </View>
-                {item.content}
+      <View style={styles.content}>
+        <FlatList
+          data={sections}
+          keyExtractor={(item, index) => index.toString()}
+          renderItem={({ item }) => (
+            <View style={styles.section}>
+              <View style={styles.titileContent}>
+                <Text style={styles.textTitle}>{item.title}</Text>
+                <TouchableOpacity
+                  onPress={() => navigation.navigate(item.screen)}
+                >
+                  <Text style={styles.textSeeAll}>See all</Text>
+                </TouchableOpacity>
               </View>
-            )}
-            showsVerticalScrollIndicator={false}
-          />
-        </View>
-      
+              {item.content}
+            </View>
+          )}
+          showsVerticalScrollIndicator={false}
+        />
+      </View>
     </SafeAreaView>
   );
 };
@@ -326,14 +322,13 @@ const styles = StyleSheet.create({
 
   ContentInside: {
     height: 270,
-
   },
 
   // Album Trending
-  album:{
-    alignItems : "center",
+  album: {
+    alignItems: "center",
     justifyContent: "center",
-    margin:5,
+    margin: 5,
   },
 
   imageAlbum: {
@@ -342,101 +337,100 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
 
-  containerAlbum:{
+  containerAlbum: {
     flexDirection: "column",
     alignItems: "center",
     justifyContent: "space-between",
-    marginTop:5,
+    marginTop: 5,
   },
 
-  textNameAB:{
+  textNameAB: {
     width: 180,
     fontSize: 18,
     fontWeight: "bold",
     textAlign: "left",
   },
 
-  nameSinger:{
+  nameSinger: {
     fontSize: 17,
     fontWeight: "bold",
-    textAlign:"left",
+    textAlign: "left",
   },
 
   // Popular Artist
 
-  popular:{
-    flexDirection:'column',
-    justifyContent:'center',
-    alignItems:'center',
+  popular: {
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
   },
 
-  buttonFollow:{
-    borderRadius:10,
-    borderWidth:0,
-    padding:4,
-    width:80,
-    backgroundColor:'blue',
-    marginTop:5,
+  buttonFollow: {
+    borderRadius: 10,
+    borderWidth: 0,
+    padding: 4,
+    width: 80,
+    backgroundColor: "blue",
+    marginTop: 5,
   },
 
-  nameSingerP:{
-    fontSize:18,
-    textAlign:'left',
+  nameSingerP: {
+    fontSize: 18,
+    textAlign: "left",
   },
 
-  textFollow:{
-    fontSize:20,
-    fontWeight:'bold',
-    textAlign:'center',
-    color:'white',
+  textFollow: {
+    fontSize: 20,
+    fontWeight: "bold",
+    textAlign: "center",
+    color: "white",
   },
 
-  imageSingerP:{
-    width:180,
-    height:180,
-    borderRadius:100,
-    margin:10,
+  imageSingerP: {
+    width: 180,
+    height: 180,
+    borderRadius: 100,
+    margin: 10,
   },
 
   // Charts
-  imageTop:{
-    width:200,
-    height:200,
-    borderRadius:10,
+  imageTop: {
+    width: 200,
+    height: 200,
+    borderRadius: 10,
   },
 
-  chart:{
-    flexDirection:'column',
-    justifyContent:'center',
-    alignItems:'center',
-    margin:10,
+  chart: {
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+    margin: 10,
   },
 
   // suggestions for you
-    suggestion:{
-      margin:8,
-    },
+  suggestion: {
+    margin: 8,
+  },
 
-    imageSuggest:{
-      width:230,
-      height:260,
-      flexDirection:'column',
-      justifyContent:'flex-end',
-    },
+  imageSuggest: {
+    width: 230,
+    height: 260,
+    flexDirection: "column",
+    justifyContent: "flex-end",
+  },
 
-    viewSuggest:{
-      backgroundColor: "rgba(0,0,0,0.4)",
-      height:70,
-    },
+  viewSuggest: {
+    backgroundColor: "rgba(0,0,0,0.4)",
+    height: 70,
+  },
 
-    textSuggest:{
-      fontSize:17,
-      fontWeight:'bold',
-      color:'white',
-      marginLeft:20,
-      marginTop:10,
-    },
-
+  textSuggest: {
+    fontSize: 17,
+    fontWeight: "bold",
+    color: "white",
+    marginLeft: 20,
+    marginTop: 10,
+  },
 });
 
 export default HomeAudioListing;

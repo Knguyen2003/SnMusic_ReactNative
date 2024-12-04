@@ -15,7 +15,6 @@ import Icon from "react-native-vector-icons/Octicons";
 import Icon01 from "react-native-vector-icons/Feather";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 
-
 import { useDispatch, useSelector } from "react-redux";
 
 import { fetchAlbumTrenRequest } from "../redux/actions/trendingAlbumAction";
@@ -24,29 +23,28 @@ const TrendingAlbumSeeAll = ({ navigation }) => {
   const [searchQuery, setSearchQuery] = useState("");
 
   const dispatch = useDispatch();
-  const { albumTrend, loading, error } = useSelector((state) => state.albumTrend);
+  const { albumTrend, loading, error } = useSelector(
+    (state) => state.albumTrend
+  );
 
   const showAlbumTrending = ({ item }) => {
     return (
       <View style={styles.containerAlbum}>
         <TouchableOpacity style={styles.album}>
-        <View>
-          <Image
-            source={{ uri: item.image }}
-            style={styles.imageAlbum}
-          />
-        </View>
-
-        <View style={styles.containerAlbum}>
           <View>
-            <Text style={styles.textNameAB}>{item.nameAlbum}</Text>
-            <Text style={styles.textNameSG}>{item.nameSinger}</Text>
+            <Image source={{ uri: item.image }} style={styles.imageAlbum} />
           </View>
-        </View>
-      </TouchableOpacity>  
+
+          <View style={styles.containerAlbum}>
+            <View>
+              <Text style={styles.textNameAB}>{item.nameAlbum}</Text>
+              <Text style={styles.textNameSG}>{item.nameSinger}</Text>
+            </View>
+          </View>
+        </TouchableOpacity>
       </View>
     );
-  };  
+  };
 
   useEffect(() => {
     dispatch(fetchAlbumTrenRequest());
@@ -66,19 +64,22 @@ const TrendingAlbumSeeAll = ({ navigation }) => {
 
   return (
     <SafeAreaView style={styles.container}>
-        <TouchableOpacity onPress={() => navigation.goBack()} style={styles.logoutTrendAlbum}>
-                <MaterialIcons name="arrow-back-ios" size={25} style={styles.iconout}/>
-            <Text style={styles.textTrending}>Trending Albums</Text>
-        </TouchableOpacity>
-        <View style={styles.ContentInside}>
-           <FlatList
-            data={albumTrend}
-            keyExtractor={(item) => item.id}
-            renderItem={showAlbumTrending}
-            numColumns={2}
-            showsVerticalScrollIndicator={false}
-          />
-        </View>
+      <TouchableOpacity
+        onPress={() => navigation.goBack()}
+        style={styles.logoutTrendAlbum}
+      >
+        <MaterialIcons name="arrow-back-ios" size={25} style={styles.iconout} />
+        <Text style={styles.textTrending}>Trending Albums</Text>
+      </TouchableOpacity>
+      <View style={styles.ContentInside}>
+        <FlatList
+          data={albumTrend}
+          keyExtractor={(item) => item.id}
+          renderItem={showAlbumTrending}
+          numColumns={2}
+          showsVerticalScrollIndicator={false}
+        />
+      </View>
     </SafeAreaView>
   );
 };
@@ -97,20 +98,20 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
 
-  iconout:{
-    width:30,
-    color:'gray',
+  iconout: {
+    width: 30,
+    color: "gray",
   },
 
-  logoutTrendAlbum:{
-    flexDirection:'row',
-    marginTop:10,
+  logoutTrendAlbum: {
+    flexDirection: "row",
+    marginTop: 10,
   },
 
-  textTrending:{
-    fontSize:18,
-    fontWeight:'bold',
-    color:'gray',
+  textTrending: {
+    fontSize: 18,
+    fontWeight: "bold",
+    color: "gray",
   },
 
   textSeeAll: {
@@ -132,14 +133,14 @@ const styles = StyleSheet.create({
 
   ContentInside: {
     height: "auto",
-    marginTop:25,
+    marginTop: 25,
   },
 
   // Album Trending
-  album:{
-    alignItems : "center",
+  album: {
+    alignItems: "center",
     justifyContent: "center",
-    margin:5,
+    margin: 5,
   },
 
   imageAlbum: {
@@ -148,26 +149,25 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
 
-  containerAlbum:{
+  containerAlbum: {
     flexDirection: "column",
     alignItems: "center",
     justifyContent: "space-between",
-    marginTop:5,
+    marginTop: 5,
   },
 
-  textNameAB:{
+  textNameAB: {
     width: 180,
     fontSize: 18,
     fontWeight: "bold",
     textAlign: "left",
   },
 
-  nameSinger:{
+  nameSinger: {
     fontSize: 17,
     fontWeight: "bold",
-    textAlign:"left",
+    textAlign: "left",
   },
-
 });
 
 export default TrendingAlbumSeeAll;
