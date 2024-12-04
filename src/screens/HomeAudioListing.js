@@ -23,6 +23,7 @@ import { fetchSongsRequest } from "../redux/actions/songAction";
 
 const HomeAudioListing = ({ navigation }) => {
   const [searchQuery, setSearchQuery] = useState("");
+  const [followedArtists, setFollowedArtists] = useState({}); // Quản lý trạng thái Follow
 
   const dispatch = useDispatch();
   const { artists, loading, error } = useSelector((state) => state.artists);
@@ -37,14 +38,29 @@ const HomeAudioListing = ({ navigation }) => {
   const popularArtist = artists.slice(0, 6);
   const chart = tops.slice(0, 6);
 
+  // Hàm xử lý Follow/Unfollow
+  const handleFollowToggle = (artistId) => {
+    setFollowedArtists((prevState) => ({
+      ...prevState,
+      [artistId]: !prevState[artistId], // Đổi trạng thái Follow
+    }));
+  };
+
 
   const showPopopularArtists = ({ item }) => {
+    const isFollowed = followedArtists[item.id] || false; // Kiểm tra trạng thái Follow
     return (
       <TouchableOpacity style={styles.popular}>
         <Image source={{ uri: item.image }} style={styles.imageSingerP} />
         <Text style={styles.nameSingerP}>{item.name}</Text>
-        <TouchableOpacity style={styles.buttonFollow}>
-          <Text style={styles.textFollow}>Follow</Text>
+        <TouchableOpacity 
+            style={[
+              styles.buttonFollow,
+              { backgroundColor: isFollowed ? "gray" : "blue" }, // Đổi màu nút
+            ]}
+            onPress={() => handleFollowToggle(item.id)}
+        >
+          <Text style={styles.textFollow}>{isFollowed ? "UnFollow" : "Follow"} {/* Đổi text */}</Text>
         </TouchableOpacity>
       </TouchableOpacity>
     );
@@ -374,7 +390,6 @@ const styles = StyleSheet.create({
     borderWidth: 0,
     padding: 4,
     width: 80,
-    backgroundColor: "blue",
     marginTop: 5,
   },
 
@@ -384,7 +399,7 @@ const styles = StyleSheet.create({
   },
 
   textFollow: {
-    fontSize: 20,
+    fontSize: 16,
     fontWeight: "bold",
     textAlign: "center",
     color: "white",
